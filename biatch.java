@@ -1,3 +1,3 @@
-public class biatch {
-    int k = 7;
+public class extra {
+    
 }
