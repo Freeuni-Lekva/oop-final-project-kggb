@@ -1,4 +1,6 @@
 -- Drop tables in proper dependency order
+use assignment;
+
 DROP TABLE IF EXISTS private_users;
 DROP TABLE IF EXISTS admin_users;
 DROP TABLE IF EXISTS friends;
@@ -17,8 +19,8 @@ DROP TABLE IF EXISTS reported_quizzes;
 DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS quizzes;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS challenges;
 
--- Users
 CREATE TABLE users (
                        username VARCHAR(64) NOT NULL PRIMARY KEY,
                        first_name VARCHAR(64) NOT NULL,
@@ -28,7 +30,6 @@ CREATE TABLE users (
                        profile_picture VARCHAR(255)
 );
 
--- User roles
 CREATE TABLE private_users (
                                username VARCHAR(64) NOT NULL PRIMARY KEY,
                                FOREIGN KEY (username) REFERENCES users(username)
@@ -39,7 +40,6 @@ CREATE TABLE admin_users (
                              FOREIGN KEY (username) REFERENCES users(username)
 );
 
--- Friendships
 CREATE TABLE friends (
                          first_friend_username VARCHAR(64) NOT NULL,
                          second_friend_username VARCHAR(64) NOT NULL,
@@ -48,7 +48,6 @@ CREATE TABLE friends (
                          FOREIGN KEY (second_friend_username) REFERENCES users(username)
 );
 
--- Friend requests
 CREATE TABLE friend_requests (
                                  request_sent_from VARCHAR(64) NOT NULL,
                                  request_sent_to VARCHAR(64) NOT NULL,
@@ -57,7 +56,6 @@ CREATE TABLE friend_requests (
                                  FOREIGN KEY (request_sent_to) REFERENCES users(username)
 );
 
--- Messages
 CREATE TABLE messages (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                           sent_from VARCHAR(64) NOT NULL,
@@ -68,7 +66,6 @@ CREATE TABLE messages (
                           FOREIGN KEY (sent_to) REFERENCES users(username)
 );
 
--- Achievements
 CREATE TABLE achievements (
                               id BIGINT AUTO_INCREMENT PRIMARY KEY,
                               name VARCHAR(64) NOT NULL,
@@ -84,7 +81,6 @@ CREATE TABLE user_achievements (
                                    FOREIGN KEY (achievement_id) REFERENCES achievements(id)
 );
 
--- Quizzes
 CREATE TABLE quizzes (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                          quiz_name VARCHAR(120) UNIQUE NOT NULL,
@@ -94,7 +90,6 @@ CREATE TABLE quizzes (
                          FOREIGN KEY (creator) REFERENCES users(username)
 );
 
--- Quiz takes history
 CREATE TABLE quiz_takes_history (
                                     id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                     username VARCHAR(64) NOT NULL,
@@ -106,7 +101,6 @@ CREATE TABLE quiz_takes_history (
                                     FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
--- Quiz ratings
 CREATE TABLE quiz_ratings (
                               id BIGINT AUTO_INCREMENT PRIMARY KEY,
                               player VARCHAR(64) NOT NULL,
@@ -117,7 +111,6 @@ CREATE TABLE quiz_ratings (
                               FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
--- Questions mapping
 CREATE TABLE quiz_questions (
                                 quiz_id BIGINT NOT NULL,
                                 question_id BIGINT NOT NULL,
@@ -126,7 +119,6 @@ CREATE TABLE quiz_questions (
                                 FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
--- Question types
 CREATE TABLE true_or_false_questions (
                                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                          question TEXT NOT NULL,
@@ -163,7 +155,6 @@ CREATE TABLE picture_response_questions (
                                             FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
 );
 
--- Reported quizzes
 CREATE TABLE reported_quizzes (
                                   quiz_id BIGINT NOT NULL,
                                   username VARCHAR(64) NOT NULL,
@@ -174,7 +165,6 @@ CREATE TABLE reported_quizzes (
                                   FOREIGN KEY (username) REFERENCES users(username)
 );
 
--- Announcements
 CREATE TABLE announcements (
                                id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                type VARCHAR(255),
@@ -182,3 +172,16 @@ CREATE TABLE announcements (
                                title VARCHAR(255),
                                created_at DATETIME
 );
+
+CREATE TABLE challenges (
+                            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                            challenger VARCHAR(64) NOT NULL,
+                            challenged VARCHAR(64) NOT NULL,
+                            quiz_id BIGINT NOT NULL,
+                            challenge_message TEXT,
+                            sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                            FOREIGN KEY (challenger) REFERENCES users(username),
+                            FOREIGN KEY (challenged) REFERENCES users(username),
+                            FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+);
+
