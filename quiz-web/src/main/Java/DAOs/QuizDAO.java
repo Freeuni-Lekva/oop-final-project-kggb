@@ -12,16 +12,16 @@ import java.util.HashSet;
 
 public class QuizDAO {
 
-    public int id;
-    public String name;
-    public HashSet<Question> questions;
-    public String category;
-    public String description;
-    public String creator;
-    public String creation_date;
-    public boolean randomized;
-    public boolean multi_page;
-    public boolean immediate_score;
+    private int id;
+    private String name;
+    private HashSet<Question> questions;
+    private String category;
+    private String description;
+    private String creator;
+    private String creation_date;
+    private boolean randomized;
+    private boolean multi_page;
+    private boolean immediate_score;
 
     public QuizDAO(int id, String name, String category, String description, String creator, String creation_date, boolean randomized, boolean multi_page, boolean immediate_score) {
         this.id = id;
@@ -35,6 +35,68 @@ public class QuizDAO {
         this.immediate_score = immediate_score;
         this.questions = new HashSet<>();
     }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public HashSet<Question> getQuestions() {
+        return questions;
+    }
+    public void setQuestions(HashSet<Question> questions) {
+        this.questions = questions;
+    }
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getCreator() {
+        return creator;
+    }
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+    public String getCreation_date() {
+        return creation_date;
+    }
+    public void setCreation_date(String creation_date) {
+        this.creation_date = creation_date;
+    }
+    public boolean isRandomized() {
+        return randomized;
+    }
+    public void setRandomized(boolean randomized) {
+        this.randomized = randomized;
+    }
+    public boolean isMulti_page() {
+        return multi_page;
+    }
+    public void setMulti_page(boolean multi_page) {
+        this.multi_page = multi_page;
+    }
+    public boolean isImmediate_score() {
+        return immediate_score;
+    }
+    public void setImmediate_score(boolean immediate_score) {
+        this.immediate_score = immediate_score;
+    }
+
 
     public static QuizDAO getQuiz(int id) throws SQLException {
        try(Connection connection = DBConnection.getConnection();
@@ -150,7 +212,7 @@ public class QuizDAO {
             Connection conn = DBConnection.getConnection();
             String query = "SELECT * FROM quizzes ORDER BY date_created DESC";
             if(limit > 0){
-                query += "LIMIT ?";
+                query += " LIMIT ?";
             }
             PreparedStatement ps = conn.prepareStatement(query);
             if(limit > 0){
@@ -307,8 +369,8 @@ public class QuizDAO {
             while (rs.next()) {
                 QuizDAO quiz = new QuizDAO(
                         rs.getInt("quizId"),
-                        rs.getString("category"),
                         rs.getString("quiz_name"),
+                        rs.getString("category"),
                         rs.getString("creator"),
                         rs.getString("description"),
                         rs.getString("date_created"),
