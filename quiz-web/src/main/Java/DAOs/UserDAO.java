@@ -11,7 +11,6 @@ public class UserDAO {
     private String date_joined;
     private String profile_picture;
 
-
     public UserDAO(String username, String first_name, String last_name, String date_joined, String profile_picture){
         this.username = username;
         this.first_name = first_name;
