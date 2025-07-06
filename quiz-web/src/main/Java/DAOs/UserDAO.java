@@ -1,17 +1,18 @@
-package model;
+package DAOs;
 
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class User {
+public class UserDAO {
     private String username;
     private String first_name;
     private String last_name;
     private String date_joined;
     private String profile_picture;
 
-    public User(String username, String first_name, String last_name, String date_joined, String profile_picture){
+
+    public UserDAO(String username, String first_name, String last_name, String date_joined, String profile_picture){
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -86,13 +87,13 @@ public class User {
         }
     }
 
-    public static User getUser(String username) throws SQLException {
+    public static UserDAO getUser(String username) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?")) {
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new User(
+                return new UserDAO(
                         resultSet.getString("username"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
@@ -126,8 +127,8 @@ public class User {
         return false;
     }
 
-    public ArrayList<User> getFriends(int limit) throws SQLException {
-        ArrayList<User> friends = new ArrayList<>();
+    public ArrayList<UserDAO> getFriends(int limit) throws SQLException {
+        ArrayList<UserDAO> friends = new ArrayList<>();
         String query = "SELECT u.* FROM users u\n" +
                 "            JOIN friends f ON (\n" +
                 "                (f.first_friend_username = ? AND f.second_friend_username = u.username)\n" +
@@ -142,7 +143,7 @@ public class User {
             ps.setInt(3, limit);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                friends.add(new User(
+                friends.add(new UserDAO(
                         rs.getString("username"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
