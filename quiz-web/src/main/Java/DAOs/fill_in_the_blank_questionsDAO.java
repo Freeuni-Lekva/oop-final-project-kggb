@@ -9,7 +9,7 @@ import java.util.List;
 
 public class fill_in_the_blank_questionsDAO {
     public void addQuestion(FillInTheBlankQuestion q) throws SQLException {
-        String sql = "INSERT INTO true_or_false_questions (quiz_id, question, correct_answer, question_order, points) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fill_in_the_blank_questions (quiz_id, question, correct_answer, question_order, points) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, q.getQuizId());
