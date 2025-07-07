@@ -276,6 +276,7 @@ public class QuizDAO {
                 while (rs.next()) {
                     questions.add(new TrueFalseQuestion(
                             rs.getLong("id"),
+                            quizId,
                             rs.getString("question"),
                             rs.getBoolean("correct_answer"),
                             rs.getInt("question_order"),
@@ -291,6 +292,7 @@ public class QuizDAO {
                 while (rs.next()) {
                     questions.add(new FillInTheBlankQuestion(
                             rs.getLong("id"),
+                            quizId,
                             rs.getString("question"),
                             rs.getString("correct_answer"),
                             rs.getBoolean("case_sensitive"),
@@ -313,6 +315,7 @@ public class QuizDAO {
 
                     questions.add(new MultipleChoiceQuestion(
                             rs.getLong("id"),
+                            quizId,
                             rs.getString("question"),
                             rs.getString("correct_answer"),
                             choices,
@@ -329,6 +332,7 @@ public class QuizDAO {
                 while (rs.next()) {
                     questions.add(new PictureResponseQuestion(
                             rs.getLong("id"),
+                            quizId,
                             rs.getString("picture_url"),
                             rs.getString("question"),
                             rs.getString("correct_answer"),
