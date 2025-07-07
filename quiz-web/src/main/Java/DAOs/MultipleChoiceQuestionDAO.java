@@ -1,5 +1,7 @@
 package DAOs;
 
+import Models.MultipleChoiceQuestion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class multiple_choice_questionsDAO {
+public class MultipleChoiceQuestionDAO {
     public void addQuestion(MultipleChoiceQuestion q) throws SQLException {
         String sql = "INSERT INTO multiple_choice_questions (quiz_id, question, correct_answer, incorrect_choice_1, incorrect_choice_2, incorrect_choice_3, question_order, points) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();

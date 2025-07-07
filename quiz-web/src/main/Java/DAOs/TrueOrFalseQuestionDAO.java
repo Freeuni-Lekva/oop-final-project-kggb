@@ -1,5 +1,7 @@
 package DAOs;
 
+import Models.TrueFalseQuestion;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class true_or_false_questionsDAO {
+public class TrueOrFalseQuestionDAO {
     public void addQuestion(TrueFalseQuestion q) throws SQLException {
         String sql = "INSERT INTO true_or_false_questions (quiz_id, question, correct_answer, question_order, points) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();

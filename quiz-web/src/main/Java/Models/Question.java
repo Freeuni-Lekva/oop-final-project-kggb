@@ -1,4 +1,4 @@
-package DAOs;
+package Models;
 
 public abstract class Question {
     protected long id;

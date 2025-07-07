@@ -1,4 +1,4 @@
-package DAOs;
+package Models;
 
 public class FillInTheBlankQuestion extends Question {
     private String correctAnswer;
