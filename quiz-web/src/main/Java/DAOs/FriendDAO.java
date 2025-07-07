@@ -1,35 +1,14 @@
 package DAOs;
 
+import Models.Friend;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FriendsDAO {
-    private String firstFriendUsername;
-    private String secondFriendUsername;
-
-    public FriendsDAO(String firstFriendUsername, String secondFriendUsername) {
-        this.firstFriendUsername = firstFriendUsername;
-        this.secondFriendUsername = secondFriendUsername;
-    }
-
-    public String getFirstFriendUsername() {
-        return firstFriendUsername;
-    }
-
-    public void setFirstFriendUsername(String firstFriendUsername) {
-        this.firstFriendUsername = firstFriendUsername;
-    }
-
-    public String getSecondFriendUsername() {
-        return secondFriendUsername;
-    }
-
-    public void setSecondFriendUsername(String secondFriendUsername) {
-        this.secondFriendUsername = secondFriendUsername;
-    }
+public class FriendDAO {
 
     public static void addFriends(String firstFriendUsername, String secondFriendUsername) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
@@ -71,8 +50,8 @@ public class FriendsDAO {
         }
     }
 
-    public ArrayList<String> getFriendsOfUser(String username) throws SQLException {
-        ArrayList<String> friends = new ArrayList<>();
+    public ArrayList<Friend> getFriendsOfUser(String username) throws SQLException {
+        ArrayList<Friend> friends = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("Select * FROM friends " +
                 "Where first_friend_username = ? OR second_friend_username = ?")){
@@ -82,12 +61,7 @@ public class FriendsDAO {
             while(resultSet.next()){
                 String firstFriend = resultSet.getString("first_friend_username");
                 String secondFriend = resultSet.getString("second_friend_username");
-                if(firstFriend.equals(username)){
-                    friends.add(secondFriend);
-                }
-                if(secondFriend.equals(username)){
-                    friends.add(firstFriend);
-                }
+                friends.add(new Friend(firstFriend, secondFriend));
             }
         }
         return friends;

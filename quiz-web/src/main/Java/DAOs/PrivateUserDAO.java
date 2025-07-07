@@ -1,5 +1,7 @@
 package DAOs;
 
+import Models.PrivateUser;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,20 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PrivateUserDAO {
-    private String username;
-
-    public PrivateUserDAO(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public static void addPrivateUser(String username) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO private_users (username) VALUES (?)")){
@@ -49,13 +37,13 @@ public class PrivateUserDAO {
         }
     }
 
-    public static ArrayList<PrivateUserDAO> getAllPrivateUsers() throws SQLException {
-        ArrayList<PrivateUserDAO> privateUsers = new ArrayList<>();
+    public static ArrayList<PrivateUser> getAllPrivateUsers() throws SQLException {
+        ArrayList<PrivateUser> privateUsers = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT username FROM private_users")){
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
-                privateUsers.add(new PrivateUserDAO(resultSet.getString("username")));
+                privateUsers.add(new PrivateUser(resultSet.getString("username")));
             }
         }
         return privateUsers;
