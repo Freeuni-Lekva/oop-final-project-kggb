@@ -14,106 +14,21 @@ import java.util.HashSet;
 
 public class QuizDAO {
 
-    private int id;
-    private String name;
-    private HashSet<Question> questions;
-    private String category;
-    private String description;
-    private String creator;
-    private String creation_date;
-    private boolean randomized;
-    private boolean multi_page;
-    private boolean immediate_score;
 
-    public QuizDAO(int id, String name, String category, String description, String creator, String creation_date, boolean randomized, boolean multi_page, boolean immediate_score) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.creator = creator;
-        this.creation_date = creation_date;
-        this.randomized = randomized;
-        this.multi_page = multi_page;
-        this.immediate_score = immediate_score;
-        this.questions = new HashSet<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public HashSet<Question> getQuestions() {
-        return questions;
-    }
-    public void setQuestions(HashSet<Question> questions) {
-        this.questions = questions;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getCreator() {
-        return creator;
-    }
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-    public String getCreation_date() {
-        return creation_date;
-    }
-    public void setCreation_date(String creation_date) {
-        this.creation_date = creation_date;
-    }
-    public boolean isRandomized() {
-        return randomized;
-    }
-    public void setRandomized(boolean randomized) {
-        this.randomized = randomized;
-    }
-    public boolean isMulti_page() {
-        return multi_page;
-    }
-    public void setMulti_page(boolean multi_page) {
-        this.multi_page = multi_page;
-    }
-    public boolean isImmediate_score() {
-        return immediate_score;
-    }
-    public void setImmediate_score(boolean immediate_score) {
-        this.immediate_score = immediate_score;
-    }
-
-
-    public static QuizDAO getQuiz(int id) throws SQLException {
+    public static Quiz getQuiz(int id) throws SQLException {
        try(Connection connection = DBConnection.getConnection();
        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE id = ?");){
            preparedStatement.setInt(1, id);
            ResultSet rs = preparedStatement.executeQuery();
            if(rs.next()) {
-               return new QuizDAO(id, rs.getString("quiz_name"), rs.getString("category"), rs.getString("description"), rs.getString("creator"), rs.getString("date_created"),  rs.getBoolean("randomized"), rs.getBoolean("multi_page"), rs.getBoolean("immediate_score"));
+               return new Quiz(id, rs.getString("quiz_name"), rs.getString("category"), rs.getString("description"), rs.getString("creator"), rs.getString("date_created"),  rs.getBoolean("randomized"), rs.getBoolean("multi_page"), rs.getBoolean("immediate_score"));
            }
        }
        return null;
     }
 
-    public static ArrayList<QuizDAO> getQuizzesByCreator(String creator, int limit) {
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getQuizzesByCreator(String creator, int limit) {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
 
         try {
             Connection conn = DBConnection.getConnection();
@@ -132,7 +47,7 @@ public class QuizDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                QuizDAO quiz = new QuizDAO(rs.getInt("id"),
+                Quiz quiz = new Quiz(rs.getInt("id"),
                         rs.getString("quiz_name"), 
                         rs.getString("category"),
                         rs.getString("description"),
@@ -208,8 +123,8 @@ public class QuizDAO {
         }
     }
 
-    public static ArrayList<QuizDAO> getQuizzes(int limit){
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getQuizzes(int limit){
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         try{
             Connection conn = DBConnection.getConnection();
             String query = "SELECT * FROM quizzes ORDER BY date_created DESC";
@@ -222,7 +137,7 @@ public class QuizDAO {
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                quizzes.add(new QuizDAO(rs.getInt("id"),
+                quizzes.add(new Quiz(rs.getInt("id"),
                         rs.getString("quiz_name"),
                         rs.getString("category"),
                         rs.getString("description"),
@@ -239,8 +154,8 @@ public class QuizDAO {
         return quizzes;
     }
 
-    public static ArrayList<QuizDAO> getQuizzesByCategory(String category){
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getQuizzesByCategory(String category){
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         QuizDAO quiz = null;
         try{
             Connection conn = DBConnection.getConnection();
@@ -249,7 +164,7 @@ public class QuizDAO {
             ps.setString(1, category);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                quizzes.add(new QuizDAO(rs.getInt("id"),
+                quizzes.add(new Quiz(rs.getInt("id"),
                         rs.getString("quiz_name"),
                         rs.getString("category"),
                         rs.getString("description"),
@@ -350,8 +265,8 @@ public class QuizDAO {
         return questions;
     }
 
-    public static ArrayList<QuizDAO> getPopularQuizzes(int limit) throws SQLException {
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getPopularQuizzes(int limit) throws SQLException {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
 
         String query =
@@ -373,7 +288,7 @@ public class QuizDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                QuizDAO quiz = new QuizDAO(
+                Quiz quiz = new Quiz(
                         rs.getInt("quizId"),
                         rs.getString("quiz_name"),
                         rs.getString("category"),
@@ -394,8 +309,8 @@ public class QuizDAO {
         return quizzes;
     }
 
-    public static ArrayList<QuizDAO> getSimilarQuizName(String quizName, int limit) throws SQLException {
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getSimilarQuizName(String quizName, int limit) throws SQLException {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
 
         String query = "SELECT * FROM quizzes WHERE quiz_name LIKE ? ORDER BY date_created DESC";
@@ -408,7 +323,7 @@ public class QuizDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                QuizDAO quiz = new QuizDAO(
+                Quiz quiz = new Quiz(
                         rs.getInt("id"),
                         rs.getString("category"),
                         rs.getString("quiz_name"),
@@ -429,8 +344,8 @@ public class QuizDAO {
         return quizzes;
     }
 
-    public static ArrayList<QuizDAO> getFriendsCreatedQuizzes(String username, int limit) throws SQLException {
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getFriendsCreatedQuizzes(String username, int limit) throws SQLException {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
 
         String query =
@@ -458,7 +373,7 @@ public class QuizDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                QuizDAO quiz = new QuizDAO(
+                Quiz quiz = new Quiz(
                         rs.getInt("id"),
                         rs.getString("category"),
                         rs.getString("quiz_name"),
@@ -479,8 +394,8 @@ public class QuizDAO {
         return quizzes;
     }
 
-    public static ArrayList<QuizDAO> getUnratedQuizzes(String username, int limit) throws SQLException {
-        ArrayList<QuizDAO> quizzes = new ArrayList<>();
+    public static ArrayList<Quiz> getUnratedQuizzes(String username, int limit) throws SQLException {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
         Connection conn = DBConnection.getConnection();
 
         String query =
@@ -502,7 +417,7 @@ public class QuizDAO {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                QuizDAO quiz = new QuizDAO(
+                Quiz quiz = new Quiz(
                         rs.getInt("id"),
                         rs.getString("category"),
                         rs.getString("quiz_name"),
