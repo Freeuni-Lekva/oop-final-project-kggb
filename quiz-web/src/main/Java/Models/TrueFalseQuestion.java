@@ -1,4 +1,4 @@
-package DAOs;
+package Models;
 
 public class TrueFalseQuestion extends Question {
     private boolean correctAnswer;
