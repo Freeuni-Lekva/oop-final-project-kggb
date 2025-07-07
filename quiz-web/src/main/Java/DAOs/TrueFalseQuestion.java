@@ -1,7 +1,12 @@
 package DAOs;
 
 public class TrueFalseQuestion extends Question {
-    public TrueFalseQuestion(long id, String question, boolean correctAnswer, int questionOrder, int points) {
-        super();
+    private boolean correctAnswer;
+    public TrueFalseQuestion(long id, long quizId, String question, boolean correctAnswer, int questionOrder, int points) {
+        super(id, quizId, question, questionOrder, points);
+        this.correctAnswer = correctAnswer;
+    }
+    public boolean isCorrectAnswer() {
+        return correctAnswer;
     }
 }
