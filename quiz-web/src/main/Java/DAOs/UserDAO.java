@@ -1,64 +1,12 @@
 package DAOs;
 
+import Models.User;
+
 import java.security.MessageDigest;
 import java.sql.*;
 import java.util.ArrayList;
 
 public class UserDAO {
-    private String username;
-    private String first_name;
-    private String last_name;
-    private String date_joined;
-    private String profile_picture;
-
-    public UserDAO(String username, String first_name, String last_name, String date_joined, String profile_picture){
-        this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.date_joined = date_joined;
-        this.profile_picture = profile_picture;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
-
-    public String getLast_name() {
-        return last_name;
-    }
-
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
-
-    public String getDate_joined() {
-        return date_joined;
-    }
-
-    public void setDate_joined(String date_joined) {
-        this.date_joined = date_joined;
-    }
-
-    public String getProfile_picture() {
-        return profile_picture;
-    }
-
-    public void setProfile_picture(String profile_picture) {
-        this.profile_picture = profile_picture;
-    }
-
 
     public static void createUser(String username, String first_name, String last_name, String date_joined, String password, String pfp_url) throws SQLException {
         String encrypted_password = hashPassword(password);
@@ -86,13 +34,13 @@ public class UserDAO {
         }
     }
 
-    public static UserDAO getUser(String username) throws SQLException {
+    public static User getUser(String username) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE username = ?")) {
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new UserDAO(
+                return new User(
                         resultSet.getString("username"),
                         resultSet.getString("first_name"),
                         resultSet.getString("last_name"),
@@ -126,8 +74,8 @@ public class UserDAO {
         return false;
     }
 
-    public ArrayList<UserDAO> getFriends(int limit) throws SQLException {
-        ArrayList<UserDAO> friends = new ArrayList<>();
+    public ArrayList<User> getFriends(String username, int limit) throws SQLException {
+        ArrayList<User> friends = new ArrayList<>();
         String query = "SELECT u.* FROM users u\n" +
                 "            JOIN friends f ON (\n" +
                 "                (f.first_friend_username = ? AND f.second_friend_username = u.username)\n" +
@@ -137,12 +85,12 @@ public class UserDAO {
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, this.username);
-            ps.setString(2, this.username);
+            ps.setString(1, username);
+            ps.setString(2, username);
             ps.setInt(3, limit);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                friends.add(new UserDAO(
+                friends.add(new User(
                         rs.getString("username"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
