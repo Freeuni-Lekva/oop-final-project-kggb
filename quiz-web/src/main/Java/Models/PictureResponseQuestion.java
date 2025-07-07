@@ -1,4 +1,4 @@
-package DAOs;
+package Models;
 
 public class PictureResponseQuestion extends Question {
     private String pictureUrl;
