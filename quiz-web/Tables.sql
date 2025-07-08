@@ -1,6 +1,7 @@
 -- Drop tables in proper dependency order
 USE assignment;
 
+DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS private_users;
 DROP TABLE IF EXISTS admin_users;
 DROP TABLE IF EXISTS friends;
@@ -16,10 +17,9 @@ DROP TABLE IF EXISTS fill_in_the_blank_questions;
 DROP TABLE IF EXISTS multiple_choice_questions;
 DROP TABLE IF EXISTS picture_response_questions;
 DROP TABLE IF EXISTS reported_quizzes;
-DROP TABLE IF EXISTS announcements;
+DROP TABLE IF EXISTS challenges;
 DROP TABLE IF EXISTS quizzes;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS challenges;
 
 CREATE TABLE users (
                        username VARCHAR(64) NOT NULL PRIMARY KEY,
