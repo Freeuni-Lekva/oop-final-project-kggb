@@ -11,7 +11,9 @@ import java.util.List;
 
 public class FillInTheBlankQuestionDAO {
     public void addQuestion(FillInTheBlankQuestion q) throws SQLException {
-        String sql = "INSERT INTO fill_in_the_blank_questions (quiz_id, question, correct_answer, question_order, points) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO fill_in_the_blank_questions " +
+                "(quiz_id, question, correct_answer, question_order, points, case_sensitive) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, q.getQuizId());
@@ -23,6 +25,7 @@ public class FillInTheBlankQuestionDAO {
             stmt.executeUpdate();
         }
     }
+
     public List<FillInTheBlankQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
         List<FillInTheBlankQuestion> questions = new ArrayList<>();
         String sql = "SELECT * FROM fill_in_the_blank_questions WHERE quiz_id = ?";
