@@ -38,6 +38,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+
   </dependencies>
   <build>
     <finalName>quiz-web</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>8</source><target>8</target><compilerArgs>--enable-preview</compilerArgs></configuration></plugin></plugins>

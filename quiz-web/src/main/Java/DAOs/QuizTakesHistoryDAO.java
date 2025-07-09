@@ -48,7 +48,7 @@ public class QuizTakesHistoryDAO {
         }
     }
 
-    public List<QuizTakesHistory> getAllTakesForUser(String username) throws SQLException {
+    public static List<QuizTakesHistory> getAllTakesForUser(String username) throws SQLException {
         String sql = "SELECT * FROM quiz_takes_history WHERE username = ? ORDER BY time_taken DESC";
         List<QuizTakesHistory> historyList = new ArrayList<>();
 
@@ -84,4 +84,42 @@ public class QuizTakesHistoryDAO {
             stmt.executeUpdate();
         }
     }
+
+    public static List<QuizTakesHistory> getRecentTakesByFriends(String username) throws SQLException {
+        String sql = " SELECT qth.*\n" +
+                "        FROM quiz_takes_history qth\n" +
+                "        JOIN (\n" +
+                "            SELECT second_friend_username AS friend FROM friends WHERE first_friend_username = ?\n" +
+                "            UNION\n" +
+                "            SELECT first_friend_username AS friend FROM friends WHERE second_friend_username = ?\n" +
+                "        ) f ON qth.username = f.friend\n" +
+                "        ORDER BY qth.time_taken DESC";
+
+
+        List<QuizTakesHistory> friendTakes = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, username);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    friendTakes.add(new QuizTakesHistory(
+                            rs.getLong("id"),
+                            rs.getString("username"),
+                            rs.getLong("quiz_id"),
+                            rs.getLong("score"),
+                            rs.getLong("max_score"),
+                            rs.getTimestamp("time_taken"),
+                            rs.getTime("time_spent")
+                    ));
+                }
+            }
+        }
+
+        return friendTakes;
+    }
+
 }
