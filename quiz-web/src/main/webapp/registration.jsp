@@ -26,7 +26,7 @@
     <label>Last Name:</label>
     <input type="text" name="lastName" required><br>
     <label>Password:</label>
-    <input type="text" name="password" required><br>
+    <input type="password" name="password" required><br>
     <label>Profile Picture Url:</label>
     <input type="text" name="profilePicture" required><br>
     <button type="submit">Create An Account</button>
