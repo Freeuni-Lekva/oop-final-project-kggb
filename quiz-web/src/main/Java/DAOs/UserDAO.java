@@ -8,9 +8,9 @@ import java.util.ArrayList;
 
 public class UserDAO {
 
-    public static void createUser(String username, String first_name, String last_name, String date_joined, String password, String pfp_url) throws SQLException {
+    public static void createUser(String username, String first_name, String last_name, String password, String pfp_url) throws SQLException {
         String encrypted_password = hashPassword(password);
-        if (pfp_url.isEmpty()) {
+        if (pfp_url == null) {
             pfp_url = "https://media.istockphoto.com/id/2171382633/vector/user-profile-icon-anonymous-person-symbol-blank-avatar-graphic-vector-illustration.jpg?s=612x612&w=0&k=20&c=ZwOF6NfOR0zhYC44xOX06ryIPAUhDvAajrPsaZ6v1-w=";
         }
         try (Connection connection = DBConnection.getConnection();
@@ -74,7 +74,7 @@ public class UserDAO {
         return false;
     }
 
-    public ArrayList<User> getFriends(String username, int limit) throws SQLException {
+    public static ArrayList<User> getFriends(String username, int limit) throws SQLException {
         ArrayList<User> friends = new ArrayList<>();
         String query = "SELECT u.* FROM users u\n" +
                 "            JOIN friends f ON (\n" +
@@ -111,7 +111,7 @@ public class UserDAO {
         }
     }
 
-    private static String hashPassword(String password) {
+    public static String hashPassword(String password) {
         String hashedWord = "";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA");
