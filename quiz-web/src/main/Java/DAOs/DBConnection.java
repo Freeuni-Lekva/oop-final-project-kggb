@@ -8,7 +8,7 @@ public class DBConnection {
 
     private static final String URL = "jdbc:mysql://localhost/assignment"; // replace with your DB URL
     private static final String USERNAME = "root"; // replace with your DB username
-    private static final String PASSWORD = "lukasmysql";     // replace with your DB password
+    private static final String PASSWORD = "Tamari10!@";     // replace with your DB password
 
 
     static {
