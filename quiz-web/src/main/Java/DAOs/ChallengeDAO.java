@@ -24,20 +24,20 @@ public class ChallengeDAO {
 
     }
 
-    public static void removeChallenge(long quizID) throws SQLException {
+    public static void removeChallenge(long id) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM challenges WHERE quiz_id = ?")) {
-            preparedStatement.setLong(1, quizID);
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM challenges WHERE id = ?")) {
+            preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         }
 
     }
 
-    public static void changeChallengeStatus(long quizID, String status) throws SQLException {
+    public static void changeChallengeStatus(long id, String status) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE challenges SET status = ? WHERE quiz_id = ?")) {
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE challenges SET status = ? WHERE id = ?")) {
             preparedStatement.setString(1, status);
-            preparedStatement.setLong(2, quizID);
+            preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
         }
 
