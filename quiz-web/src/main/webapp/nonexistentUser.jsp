@@ -2,15 +2,16 @@
 <html>
 <head>
     <title>User Not Found</title>
+    <link rel="stylesheet" type="text/css" href="css/nonexistentWrongPassword.css">
 </head>
 <body>
-<h2 style="color: red;">User does not exist</h2>
+<h2 class="error-message">User does not exist</h2>
 
-<form action="login.jsp" method="get" style="display: inline;">
+<form action="login.jsp" method="get" class="inline-form">
     <button type="submit">Go Back to Log In</button>
 </form>
 
-<form action="createAccount.jsp" method="get" style="display: inline; margin-left: 10px;">
+<form action="registration.jsp" method="get" class="inline-form">
     <button type="submit">Create an Account</button>
 </form>
 </body>

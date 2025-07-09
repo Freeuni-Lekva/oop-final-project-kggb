@@ -2,11 +2,12 @@
 <html>
 <head>
     <title>Incorrect Password</title>
+    <link rel="stylesheet" type="text/css" href="css/nonexistentWrongPassword.css">
 </head>
 <body>
-<h2 style="color: red;">Your password is incorrect</h2>
+<h2 class="error-message">Your password is incorrect</h2>
 
-<form action="login.jsp" method="get">
+<form action="login.jsp" method="get" class="inline-form">
     <button type="submit">Go Back to Log In</button>
 </form>
 </body>
