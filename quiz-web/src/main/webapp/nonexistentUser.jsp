@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>User Not Found</title>
-    <link rel="stylesheet" type="text/css" href="css/nonexistentWrongPassword.css">
+    <link rel="stylesheet" href="css/welcome.css">
 </head>
 <body>
 <h2 class="error-message">User does not exist</h2>

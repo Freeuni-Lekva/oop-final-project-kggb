@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Incorrect Password</title>
-    <link rel="stylesheet" type="text/css" href="css/nonexistentWrongPassword.css">
+    <link rel="stylesheet" href="css/welcome.css">
 </head>
 <body>
 <h2 class="error-message">Your password is incorrect</h2>

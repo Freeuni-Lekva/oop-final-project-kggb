@@ -50,7 +50,7 @@ public class FriendDAO {
         }
     }
 
-    public ArrayList<Friend> getFriendsOfUser(String username) throws SQLException {
+    public static ArrayList<Friend> getFriendsOfUser(String username) throws SQLException {
         ArrayList<Friend> friends = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("Select * FROM friends " +
