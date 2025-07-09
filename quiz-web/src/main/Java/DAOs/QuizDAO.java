@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class QuizDAO {
 
@@ -295,6 +296,34 @@ public class QuizDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+        return quizzes;
+    }
+
+    public static List<Quiz> getCreatedByUser(String username) throws SQLException {
+        List<Quiz> quizzes = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT id, quiz_name, category, description, creator, date_created " +
+                     "FROM quizzes WHERE creator = ?")) {
+            stmt.setString(1, username);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    quizzes.add(new Quiz(
+                            rs.getLong("id"),
+                            rs.getString("quiz_name"),
+                            rs.getString("category"),
+                            rs.getString("description"),
+                            rs.getString("creator"),
+                            rs.getString("date_created"),
+                            rs.getBoolean("randomized"),
+                            rs.getBoolean("multipage"),
+                            rs.getBoolean("immediate_score")
+                    ));
+                }
+            }
         }
 
         return quizzes;

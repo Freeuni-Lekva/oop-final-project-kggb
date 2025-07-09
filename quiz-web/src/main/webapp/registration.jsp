@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>Registration</title>
+    <link rel="stylesheet" href="css/welcome.css">
+
 </head>
 <body>
 <h1>CREATE AN ACCOUNT</h1>
@@ -19,16 +21,16 @@
 <% } %>
 
 <form action = "registration" method = "post">
-    <label>Username:</label>
-    <input type="text" name="username" required><br>
-    <label>First Name:</label>
-    <input type="text" name="firstName" required><br>
-    <label>Last Name:</label>
-    <input type="text" name="lastName" required><br>
-    <label>Password:</label>
-    <input type="password" name="password" required><br>
-    <label>Profile Picture Url:</label>
-    <input type="text" name="profilePicture" required><br>
+    <label>Username:</label><br>
+    <input type="text" name="username" required><br><br>
+    <label>First Name:</label><br>
+    <input type="text" name="firstName" required><br><br>
+    <label>Last Name:</label><br>
+    <input type="text" name="lastName" required><br><br>
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+    <label>Profile Picture Url:</label><br>
+    <input type="text" name="profilePicture" required><br><br>
     <button type="submit">Create An Account</button>
 
 </form>

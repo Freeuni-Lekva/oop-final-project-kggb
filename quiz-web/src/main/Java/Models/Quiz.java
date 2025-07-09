@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Quiz {
 
-    private int id;
+    private long id;
     private String name;
     private HashSet<Question> questions;
     private String category;
@@ -15,7 +15,7 @@ public class Quiz {
     private boolean multi_page;
     private boolean immediate_score;
 
-    public Quiz(int id, String name, String category, String description, String creator, String creation_date, boolean randomized, boolean multi_page, boolean immediate_score) {
+    public Quiz(long id, String name, String category, String description, String creator, String creation_date, boolean randomized, boolean multi_page, boolean immediate_score) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -28,10 +28,10 @@ public class Quiz {
         this.questions = new HashSet<>();
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
     public String getName() {

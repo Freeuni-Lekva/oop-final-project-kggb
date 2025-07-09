@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="css/welcome.css">
+
 </head>
 <body>
 <h1>LOGIN</h1>
