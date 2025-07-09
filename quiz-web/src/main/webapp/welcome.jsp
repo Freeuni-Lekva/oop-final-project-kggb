@@ -6,7 +6,11 @@
 </head>
 <body>
 
-<h1>WELCOME TO OUR QUIZ WEBSITE</h1>
+<!-- Logo Image -->
+<img src="images/brainbuzz-logo.png" alt="BrainBuzz Logo" style="width:200px; display:block; margin: 20px auto;">
+
+<h1>Welcome to <span class="brand">BrainBuzz</span></h1>
+<p class="instruction">Log in or create an account to access quizzes</p>
 
 <form action="login.jsp" method="get">
     <button type="submit">LOG IN</button>
