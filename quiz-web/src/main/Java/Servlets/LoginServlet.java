@@ -21,6 +21,7 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+
         UserDAO userDAO = new UserDAO();
         try {
             if (!userDAO.userExists(username)) {
@@ -29,6 +30,11 @@ public class LoginServlet extends HttpServlet {
             } else if (userDAO.correctPassword(username, password)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
+                if(UserDAO.isAdmin(username)) {
+                    session.setAttribute("isAdmin", true);
+                }else{
+                    session.setAttribute("isAdmin", false);
+                }
                 response.sendRedirect("frontPage.jsp");
                 return;
             } else {
