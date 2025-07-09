@@ -10,6 +10,7 @@ public class DBConnection {
     private static final String USERNAME = "root"; // replace with your DB username
     private static final String PASSWORD = "lukasmysql";     // replace with your DB password
 
+
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL JDBC driver

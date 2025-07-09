@@ -12,4 +12,5 @@ public class FillInTheBlankQuestion extends Question {
 
     public String getCorrectAnswer() { return correctAnswer; }
     public boolean isCaseSensitive() { return caseSensitive; }
+
 }

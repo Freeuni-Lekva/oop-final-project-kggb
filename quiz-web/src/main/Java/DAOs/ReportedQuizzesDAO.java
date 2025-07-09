@@ -8,9 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 
-public class ReportedQuizzeDAO {
+public class ReportedQuizzesDAO {
     public void addReport(ReportedQuiz report) throws SQLException {
         String sql = "INSERT INTO reported_quizzes (quiz_id, username, message, report_type, status) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
