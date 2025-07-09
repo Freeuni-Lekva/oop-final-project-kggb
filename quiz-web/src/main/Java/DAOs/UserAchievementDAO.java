@@ -30,7 +30,7 @@ public class UserAchievementDAO {
             }
         }
 
-        public ArrayList<UserAchievement> getUserAchievements(String username) throws SQLException {
+        public static ArrayList<UserAchievement> getUserAchievements(String username) throws SQLException {
             ArrayList<UserAchievement> achievements = new ArrayList<>();
             try(Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user_achievements " +

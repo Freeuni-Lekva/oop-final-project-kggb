@@ -1,0 +1,139 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9f1fb;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+.page-layout {
+    display: grid;
+    grid-template-areas:
+        "top-bar top-bar top-bar"
+        "left-sidebar main-content right-sidebar";
+    grid-template-columns: 1fr 2.5fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.top-bar {
+    grid-area: top-bar;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #f0f4ff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.messages-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.messages-profile form,
+.messages-profile button,
+.messages-profile a {
+    margin: 0;
+}
+
+.messages-profile button,
+#messages-btn {
+    background-color: #b497d6;
+    border: none;
+    color: white;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#messages-btn:hover,
+.messages-profile button:hover {
+    background-color: #9a7cc1;
+}
+
+.messages-dropdown-container {
+    position: relative;
+}
+
+.messages-dropdown {
+    position: absolute;
+    right: 0;
+    top: 110%;
+    background-color: white;
+    width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 10px;
+}
+
+.message-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+.message-item:last-child {
+    border-bottom: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.left-sidebar,
+.right-sidebar,
+.main-content {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.left-sidebar {
+    grid-area: left-sidebar;
+}
+
+.right-sidebar {
+    grid-area: right-sidebar;
+}
+
+.main-content {
+    grid-area: main-content;
+}
+
+h2 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.section div,
+.left-sidebar div,
+.right-sidebar div {
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    background-color: #f8faff;
+    border-radius: 6px;
+}
+
+a {
+    color: #2a50a1;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+span {
+    color: #777;
+    font-size: 0.9em;
+}
