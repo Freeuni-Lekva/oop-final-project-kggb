@@ -29,7 +29,6 @@
 
 <div class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
 
-    <!-- Messages & Profile -->
     <div class="messages-profile" style="margin-left: auto;">
 
         <div class="messages-dropdown-container">
