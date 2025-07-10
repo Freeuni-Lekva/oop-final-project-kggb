@@ -104,7 +104,7 @@
             <% } else {
                 for (QuizTakesHistory quizTake : takenQuizzes) { %>
             <div>
-                Took <a href="quiz.jsp?id=<%= quizTake.getQuizId() %>">Quiz #<%= quizTake.getQuizId() %></a><br/>
+                Took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a><br/>
                 Score: <%= quizTake.getScore() %><br/>
                 Date: <%= quizTake.getTimeTaken() %>
             </div>
@@ -118,7 +118,7 @@
             <% } else {
                 for (Quiz cq : createdQuizzes) { %>
             <div>
-                <a href="quiz.jsp?id=<%= cq.getId() %>"><%= cq.getName() %></a><br/>
+                <a href="TakeQuizServlet?quizId=<%= cq.getId() %>">Quiz <%= cq.getId() %></a><br/>
                 <span><%= cq.getDescription() %></span>
             </div>
             <%  } } %>

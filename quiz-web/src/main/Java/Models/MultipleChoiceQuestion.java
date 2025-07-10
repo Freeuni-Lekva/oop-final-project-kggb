@@ -25,4 +25,10 @@ public class MultipleChoiceQuestion extends Question {
     public void setChoices(List<String> choices) {
         this.choices = choices;
     }
+
+    @Override
+    public boolean isUsersAnswerCorrect(String userAnswer) {
+        if (userAnswer == null) return false;
+        return userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
+    }
 }

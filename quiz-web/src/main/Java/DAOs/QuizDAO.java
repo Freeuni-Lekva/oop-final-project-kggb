@@ -10,10 +10,10 @@ import java.util.List;
 
 public class QuizDAO {
 
-    public static Quiz getQuiz(int id) throws SQLException {
+    public static Quiz getQuiz(long id) throws SQLException {
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM quizzes WHERE id = ?")) {
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 return new Quiz(id, rs.getString("quiz_name"), rs.getString("category"), rs.getString("description"),

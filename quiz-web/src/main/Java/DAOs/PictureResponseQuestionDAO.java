@@ -23,7 +23,7 @@ public class PictureResponseQuestionDAO {
         }
     }
 
-    public List<PictureResponseQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
+    public static List<PictureResponseQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
         List<PictureResponseQuestion> questions = new ArrayList<>();
         String sql = "SELECT * FROM picture_response_questions WHERE quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();

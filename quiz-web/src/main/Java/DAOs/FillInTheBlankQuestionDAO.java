@@ -26,7 +26,7 @@ public class FillInTheBlankQuestionDAO {
         }
     }
 
-    public List<FillInTheBlankQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
+    public static List<FillInTheBlankQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
         List<FillInTheBlankQuestion> questions = new ArrayList<>();
         String sql = "SELECT * FROM fill_in_the_blank_questions WHERE quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();

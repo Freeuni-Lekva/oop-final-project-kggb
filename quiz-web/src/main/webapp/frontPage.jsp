@@ -14,7 +14,7 @@
     List<Quiz> recentQuizzes = (List<Quiz>) request.getAttribute("recentQuizzes");
     List<QuizTakesHistory> quizTakesHistory = (List<QuizTakesHistory>) request.getAttribute("quizTakesHistory");
     List<Quiz> createdQuizzes = (List<Quiz>) request.getAttribute("createdQuizzes");
-    List<Friend> friends = (List<Friend>) request.getAttribute("friendsHistory");
+    List<QuizTakesHistory> friendsHistory = (List<QuizTakesHistory>) request.getAttribute("friendsHistory");
     List<Achievement> achievements = (List<Achievement>) request.getAttribute("achievements");
 %>
 
@@ -29,7 +29,6 @@
 
 <div class="top-bar">
 
-    <!-- LEFT: Create Quiz -->
     <div class="top-left">
         <form action="createQuiz.jsp" method="get">
             <button type="submit" class="action-button create-quiz-btn">
@@ -38,7 +37,6 @@
         </form>
     </div>
 
-    <!-- RIGHT: Messages -->
     <div class="top-right">
         <div class="messages-dropdown-container">
             <button id="messages-btn" class="action-button message-btn">
@@ -93,7 +91,7 @@
             <div>No popular quizzes yet.</div>
             <% } else {
                 for (Quiz q : popularQuizzes) { %>
-            <div><a href="quiz.jsp?id=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <%  }
             } %>
         </div>
@@ -104,7 +102,7 @@
             <div>No recently created quizzes yet.</div>
             <% } else {
                 for (Quiz q : recentQuizzes) { %>
-            <div><a href="quiz.jsp?id=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <%  }
             } %>
         </div>
@@ -116,7 +114,7 @@
             <% } else {
                 for (QuizTakesHistory quizTake : quizTakesHistory) { %>
             <div>
-                You took <a href="quiz.jsp?id=<%= quizTake.getQuizId() %>"><%= quizTake.getQuizId() %></a> on <%= quizTake.getTimeTaken() %>
+                You took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a> on <%= quizTake.getTimeTaken() %>
             </div>
             <%  }
             } %>
@@ -128,19 +126,24 @@
             <div>No created quizzes by you yet.</div>
             <% } else {
                 for (Quiz q : createdQuizzes) { %>
-            <div><a href="quiz.jsp?id=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>">Quiz <%= q.getId() %></a></div>
             <%  }
             } %>
         </div>
 
         <div class="section">
             <h2>Friends' Quiz Activity</h2>
-            <% if (friends == null || friends.isEmpty()) { %>
-            <div>No friends yet.</div>
+            <%
+                if (friendsHistory == null || friendsHistory.isEmpty()) {
+            %>
+            <div>No quiz activity from friends yet.</div>
             <% } else {
-                for (Friend f : friends) { %>
+                for (QuizTakesHistory quizTake : friendsHistory) {
+            %>
             <div>
-                <a href="user.jsp?username=<%= f.getSecondFriendUsername() %>"><%= f.getSecondFriendUsername() %></a> took quiz
+                <a href="user.jsp?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
+                <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a> on
+                <%= quizTake.getTimeTaken() %>
             </div>
             <%  }
             } %>

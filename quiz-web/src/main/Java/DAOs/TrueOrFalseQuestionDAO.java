@@ -22,7 +22,7 @@ public class TrueOrFalseQuestionDAO {
             stmt.executeUpdate();
         }
     }
-    public List<TrueFalseQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
+    public static List<TrueFalseQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
         List<TrueFalseQuestion> questions = new ArrayList<>();
         String sql = "SELECT * FROM true_or_false_questions WHERE quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();

@@ -12,4 +12,10 @@ public class PictureResponseQuestion extends Question {
 
     public String getPictureUrl() { return pictureUrl; }
     public String getCorrectAnswer() { return correctAnswer; }
+
+    @Override
+    public boolean isUsersAnswerCorrect(String userAnswer) {
+        if (userAnswer == null) return false;
+        return userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
+    }
 }
