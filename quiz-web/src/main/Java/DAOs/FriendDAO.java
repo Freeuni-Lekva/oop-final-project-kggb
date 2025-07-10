@@ -33,7 +33,7 @@ public class FriendDAO {
         }
     }
 
-    public boolean areFriends(String firstFriendUsername, String secondFriendUsername) throws SQLException {
+    public static boolean areFriends(String firstFriendUsername, String secondFriendUsername) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM friends " +
                     "WHERE (first_friend_username = ? AND second_friend_username = ?) " +

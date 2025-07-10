@@ -24,14 +24,23 @@ public class ProfileServlet extends HttpServlet{
             return;
         }
 
-        String username = (String) session.getAttribute("username");
+        String loggedInUsername = (String) session.getAttribute("username");
         String usernameToSearch = request.getParameter("username");
         if (usernameToSearch == null || usernameToSearch.isEmpty()) {
-            usernameToSearch = username;
+            usernameToSearch = loggedInUsername;
         }
 
         try {
             User profileUser = UserDAO.getUser(usernameToSearch);
+            if (profileUser == null) {
+                request.setAttribute("error", "User '" + usernameToSearch + "' does not exist.");
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+                return;
+            }
+
+            boolean isFriend = FriendDAO.areFriends(loggedInUsername, usernameToSearch);
+            boolean requestSentByLoggedInUser = FriendRequestDAO.friendRequestExists(loggedInUsername, usernameToSearch);
+            boolean requestSentToLoggedInUser = FriendRequestDAO.friendRequestExists(usernameToSearch, loggedInUsername);
 
             List<UserAchievement> achievements = UserAchievementDAO.getUserAchievements(usernameToSearch);
             List<QuizTakesHistory> takenQuizzes = QuizTakesHistoryDAO.getAllTakesForUser(usernameToSearch);
@@ -39,13 +48,17 @@ public class ProfileServlet extends HttpServlet{
             List<Friend> friends = FriendDAO.getFriendsOfUser(usernameToSearch);
 
             request.setAttribute("profileUser", profileUser);
+            request.setAttribute("loggedInUsername", loggedInUsername);
             request.setAttribute("achievements", achievements);
             request.setAttribute("takenQuizzes", takenQuizzes);
             request.setAttribute("createdQuizzes", createdQuizzes);
             request.setAttribute("friends", friends);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("profile.jsp");
-            dispatcher.forward(request, response);
+            request.setAttribute("isFriend", isFriend);
+            request.setAttribute("requestSentByLoggedInUser", requestSentByLoggedInUser);
+            request.setAttribute("requestSentToLoggedInUser", requestSentToLoggedInUser);
+
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
