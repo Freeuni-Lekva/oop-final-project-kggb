@@ -21,7 +21,7 @@ public class RemoveFriendServlet extends HttpServlet {
         String user2 = request.getParameter("friendUsername");
 
         try {
-            FriendDAO.removeFriends(user1, user2); // ✅ Will now work!
+            FriendDAO.removeFriends(user1, user2); 
             response.sendRedirect("profile?username=" + user2);
         } catch (SQLException e) {
             throw new RuntimeException(e);
