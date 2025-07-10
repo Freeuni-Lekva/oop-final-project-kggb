@@ -85,7 +85,7 @@ CREATE TABLE user_achievements (
 
 CREATE TABLE quizzes (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                         quiz_name VARCHAR(120) UNIQUE NOT NULL,
+                         quiz_name VARCHAR(120) NOT NULL,
                          category VARCHAR(64),
                          description TEXT,
                          creator VARCHAR(64),

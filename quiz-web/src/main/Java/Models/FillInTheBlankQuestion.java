@@ -10,7 +10,18 @@ public class FillInTheBlankQuestion extends Question {
         this.caseSensitive = caseSensitive;
     }
 
+    public FillInTheBlankQuestion() {
+        super();
+    }
+
     public String getCorrectAnswer() { return correctAnswer; }
     public boolean isCaseSensitive() { return caseSensitive; }
 
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public void setCaseSensitive(boolean caseSensitive) {
+        this.caseSensitive = caseSensitive;
+    }
 }

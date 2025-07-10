@@ -1,5 +1,6 @@
 package Models;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 
 public class Quiz {
@@ -26,6 +27,12 @@ public class Quiz {
         this.multi_page = multi_page;
         this.immediate_score = immediate_score;
         this.questions = new HashSet<>();
+    }
+
+    public Quiz(long id, String title, String category, String description, String username, Timestamp from) {
+    }
+
+    public Quiz(long id, String title, String category, String description, String username, String s) {
     }
 
     public long getId() {
