@@ -32,7 +32,8 @@ public class MessageDAO {
     public static ArrayList<Message> messagesSentToUser(String username) throws SQLException {
         ArrayList<Message> messages = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages WHERE sent_to = ?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages WHERE sent_to = ?" +
+                    "ORDER BY sent_at DESC")) {
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
@@ -52,7 +53,8 @@ public class MessageDAO {
     public static ArrayList<Message> messagesSentFromUser(String username) throws SQLException {
         ArrayList<Message> messages = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages WHERE sent_from = ?")) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM messages WHERE sent_from = ?" +
+                    "ORDER BY sent_at DESC")) {
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {

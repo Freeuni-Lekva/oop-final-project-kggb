@@ -28,5 +28,7 @@
 
     <button type="submit">Log In</button>
 </form>
+<img src="images/LetsGoBrain.png" style="max-height: 500px; width: auto;  margin: 20px auto;">
+
 </body>
 </html>

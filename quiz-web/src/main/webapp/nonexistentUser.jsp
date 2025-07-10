@@ -14,5 +14,8 @@
 <form action="registration.jsp" method="get" class="inline-form">
     <button type="submit">Create an Account</button>
 </form>
+<img src="images/SadBrain.png" style="max-height: 500px; width: auto;  margin: 20px auto;">
+
+
 </body>
 </html>

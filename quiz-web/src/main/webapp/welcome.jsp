@@ -6,8 +6,7 @@
 </head>
 <body>
 
-<!-- Logo Image -->
-<img src="images/brainbuzz-logo.png" alt="BrainBuzz Logo" style="width:200px; display:block; margin: 20px auto;">
+<img src="images/WelcomeBrain.png" alt="BrainBuzz Logo" style="max-height:500px; width: auto; display:block; margin: 20px auto;">
 
 <h1>Welcome to <span class="brand">BrainBuzz</span></h1>
 <p class="instruction">Log in or create an account to access quizzes</p>
