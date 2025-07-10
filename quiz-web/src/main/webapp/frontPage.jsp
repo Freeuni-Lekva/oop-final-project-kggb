@@ -42,10 +42,10 @@
                     <div class="message-item">You have no new messages.</div>
                     <% } else {
                         for (Message m : messages) { %>
-                    <div class="message-item">
-                        <%= m.getTitle() %> from
-                        <a href="user.jsp?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
-                        <%= m.getMessage() %>
+                    <div class="message-item" style="border-bottom: 1px solid #ccc; padding: 10px;">
+                        <strong><%= m.getTitle() %></strong><br/>
+                        From: <a href="profile?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
+                        <span><%= m.getMessage() %></span>
                     </div>
                     <%  }
                     } %>

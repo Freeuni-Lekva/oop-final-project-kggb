@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
                 }else{
                     session.setAttribute("isAdmin", false);
                 }
-                response.sendRedirect("frontPage.jsp");
+                response.sendRedirect("frontPage");
                 return;
             } else {
                 response.sendRedirect("wrongPassword.jsp");

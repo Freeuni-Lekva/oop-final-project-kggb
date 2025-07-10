@@ -14,14 +14,7 @@
 <div id="header">
     <div class="header-content">
         <div class="logo">
-            <a href="frontPage">QuizWebsite</a>
-        </div>
-
-        <div class="search-bar">
-            <form action="search.jsp" method="get">
-                <input type="text" name="query" placeholder="Search quizzes..." />
-                <button type="submit">Search</button>
-            </form>
+            <a href="frontPage">QuizWebsite</a><br><br>
         </div>
 
         <div class="nav-links">
@@ -31,7 +24,20 @@
             |
             <a href="profile.jsp">Profile</a>
             |
-            <a href="logout.jsp">Log Out</a>
+            <a href="logout.jsp">Log Out</a><br><br>
         </div>
+
+        <div class="search-bar">
+            <form action="search.jsp" method="get" class="quiz-search">
+                <input type="text" name="query" placeholder="Search quiz" />
+                <button type="submit">Search</button>
+            </form>
+
+            <form action="profile" method="get" class="user-search">
+                <input type="text" name="username" placeholder="Search user" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
     </div>
 </div>
