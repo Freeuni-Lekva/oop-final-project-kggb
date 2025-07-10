@@ -27,21 +27,12 @@
 </head>
 <body>
 
-<div class="top-bar">
+<div class="top-bar" style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
 
-    <!-- LEFT: Create Quiz -->
-    <div class="top-left">
-        <form action="createQuiz.jsp" method="get">
-            <button type="submit" class="action-button create-quiz-btn">
-                ➕ Create a Quiz
-            </button>
-        </form>
-    </div>
+    <div class="messages-profile" style="margin-left: auto;">
 
-    <!-- RIGHT: Messages -->
-    <div class="top-right">
         <div class="messages-dropdown-container">
-            <button id="messages-btn" class="action-button message-btn">
+            <button id="messages-btn" style="background-color: #007bff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                 📩 Messages
             </button>
             <div id="messages-dropdown" class="messages-dropdown hidden">
@@ -49,7 +40,7 @@
                 <div class="message-item">You have no new messages.</div>
                 <% } else {
                     for (Message m : messages) { %>
-                <div class="message-item">
+                <div class="message-item" style="border-bottom: 1px solid #ccc; padding: 10px;">
                     <strong><%= m.getTitle() %></strong><br/>
                     From: <a href="profile?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
                     <span><%= m.getMessage() %></span>
@@ -59,11 +50,7 @@
             </div>
         </div>
     </div>
-
 </div>
-
-
-
 
 <div class="page-layout">
 
