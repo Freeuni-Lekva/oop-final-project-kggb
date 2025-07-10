@@ -24,4 +24,14 @@ public class FillInTheBlankQuestion extends Question {
     public void setCaseSensitive(boolean caseSensitive) {
         this.caseSensitive = caseSensitive;
     }
+
+    @Override
+    public boolean isUsersAnswerCorrect(String userAnswer) {
+        if (userAnswer == null) return false;
+        if (caseSensitive) {
+            return userAnswer.trim().equals(correctAnswer.trim());
+        } else {
+            return userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
+        }
+    }
 }

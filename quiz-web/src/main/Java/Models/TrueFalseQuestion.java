@@ -9,4 +9,10 @@ public class TrueFalseQuestion extends Question {
     public boolean isCorrectAnswer() {
         return correctAnswer;
     }
+
+    @Override
+    public boolean isUsersAnswerCorrect(String userAnswer) {
+        if (userAnswer == null) return false;
+        return userAnswer.equalsIgnoreCase(String.valueOf(correctAnswer));
+    }
 }

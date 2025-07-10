@@ -27,7 +27,7 @@ public class MultipleChoiceQuestionDAO {
         }
     }
 
-    public List<MultipleChoiceQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
+    public static List<MultipleChoiceQuestion> getQuestionsByQuizId(long quizId) throws SQLException {
         List<MultipleChoiceQuestion> questions = new ArrayList<>();
         String sql = "SELECT * FROM multiple_choice_questions WHERE quiz_id = ?";
         try (Connection conn = DBConnection.getConnection();
