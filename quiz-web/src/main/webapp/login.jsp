@@ -6,6 +6,18 @@
 
 </head>
 <body>
+
+<%
+    String logout = request.getParameter("logout");
+    if ("success".equals(logout)) {
+%>
+<p style="color: red; font-weight: bold; text-align: center; margin-top: 20px;">
+    You have been successfully logged out.
+</p>
+<%
+    }
+%>
+
 <h1>LOGIN</h1>
 <form action="LoginServlet" method="post">
     <label for="username">Username:</label><br>

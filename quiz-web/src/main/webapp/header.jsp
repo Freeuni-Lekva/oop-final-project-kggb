@@ -14,18 +14,32 @@
 <div id="header">
     <div class="header-content">
         <div class="logo">
-            <a href="frontPage">QuizWebsite</a><br><br>
+            <a href="frontPage">BrainBuzz</a><br><br>
         </div>
 
         <div class="nav-links">
-            <span>Welcome, <a href="user.jsp?username=<%= username %>"><%= username %></a></span>
+            <span>WELCOME BACK, <%= username %></span>
             |
-            <a href="frontPage">Home</a>
+            <form action="frontPage" method="get" style="display: inline;">
+                <button type="submit" style="background-color: #4da6ff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                    Home
+                </button>
+            </form>
             |
-            <a href="profile.jsp">Profile</a>
+            <form action="profile" method="get" style="display: inline;">
+                <button type="submit" style="background-color: #4da6ff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                    Profile
+                </button>
+            </form>
             |
-            <a href="logout.jsp">Log Out</a><br><br>
+            <form action="LogoutServlet" method="get" style="display: inline;">
+                <button type="submit" style="background-color: #ff3333; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                    Sign Out
+                </button>
+            </form>
+            <br><br>
         </div>
+
 
         <div class="search-bar">
             <form action="search.jsp" method="get" class="quiz-search">

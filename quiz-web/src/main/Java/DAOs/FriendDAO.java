@@ -20,7 +20,7 @@ public class FriendDAO {
         }
     }
 
-    public void removeFriends(String firstFriendUsername, String secondFriendUsername) throws SQLException {
+    public static void removeFriends(String firstFriendUsername, String secondFriendUsername) throws SQLException {
         try(Connection connection = DBConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM friends " +
                     "WHERE (first_friend_username = ? AND second_friend_username = ?) " +
