@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Incorrect Password</title>
+    <link rel="icon" href="images/BRAINBUZZ.png">
     <link rel="stylesheet" href="css/welcome.css">
 </head>
 <body>

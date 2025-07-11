@@ -27,6 +27,8 @@
 <head>
     <title><%= profileUser != null ? profileUser.getUsername() : "User" %>'s Profile</title>
     <link rel="stylesheet" href="css/frontPage.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 </head>
 <body>
 

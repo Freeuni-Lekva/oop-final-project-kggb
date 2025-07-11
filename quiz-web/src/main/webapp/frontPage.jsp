@@ -22,6 +22,8 @@
 <head>
     <title>Welcome</title>
     <link rel="stylesheet" href="css/smth.css">
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 </head>
 <body>
 
