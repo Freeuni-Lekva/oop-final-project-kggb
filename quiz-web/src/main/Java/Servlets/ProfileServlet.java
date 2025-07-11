@@ -29,6 +29,10 @@ public class ProfileServlet extends HttpServlet{
         if (usernameToSearch == null || usernameToSearch.isEmpty()) {
             usernameToSearch = loggedInUsername;
         }
+        String error = request.getParameter("error");
+        if (error != null && !error.isEmpty()) {
+            request.setAttribute("error", error);
+        }
 
         try {
             User profileUser = UserDAO.getUser(usernameToSearch);
