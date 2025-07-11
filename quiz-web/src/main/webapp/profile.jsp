@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="Models.*" %>
+<%@ page import="DAOs.QuizDAO" %>
 
 <%
     String loggedInUsername = (String)session.getAttribute("username");
@@ -16,6 +18,7 @@
     Boolean requestSentByLoggedInUser = (Boolean) request.getAttribute("requestSentByLoggedInUser");
     Boolean requestSentToLoggedInUser = (Boolean) request.getAttribute("requestSentToLoggedInUser");
     String profileUsername = profileUser != null ? profileUser.getUsername() : "";
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
 <jsp:include page="header.jsp" />
@@ -102,13 +105,16 @@
             <% if (takenQuizzes == null || takenQuizzes.isEmpty()) { %>
             <div>No quizzes taken yet.</div>
             <% } else {
-                for (QuizTakesHistory quizTake : takenQuizzes) { %>
+                for (QuizTakesHistory quizTake : takenQuizzes) {
+                    Quiz quiz = QuizDAO.getQuiz(quizTake.getQuizId());
+                    String title = (quiz != null) ? quiz.getName() : "Quiz " + quizTake.getQuizId();
+            %>
             <div>
-                Took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a><br/>
+                Took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a><br/>
                 Score: <%= quizTake.getScore() %><br/>
-                Date: <%= quizTake.getTimeTaken() %>
+                Date: <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
-            <%  } } %>
+            <% } } %>
         </div>
 
         <div class="section">
@@ -118,7 +124,7 @@
             <% } else {
                 for (Quiz cq : createdQuizzes) { %>
             <div>
-                <a href="TakeQuizServlet?quizId=<%= cq.getId() %>">Quiz <%= cq.getId() %></a><br/>
+                <a href="TakeQuizServlet?quizId=<%= cq.getId() %>"><%= cq.getName() %></a><br/>
                 <span><%= cq.getDescription() %></span>
             </div>
             <%  } } %>

@@ -18,4 +18,5 @@ public class PictureResponseQuestion extends Question {
         if (userAnswer == null) return false;
         return userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
     }
+    public String getpictureUrl() { return pictureUrl; }
 }

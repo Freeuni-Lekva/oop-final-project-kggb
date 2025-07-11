@@ -305,8 +305,10 @@ public class QuizDAO {
         List<Quiz> quizzes = new ArrayList<>();
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT id, quiz_name, category, description, creator, date_created " +
-                     "FROM quizzes WHERE creator = ?")) {
+             PreparedStatement stmt = conn.prepareStatement(
+                     "SELECT id, quiz_name, category, description, creator, date_created, randomized, multi_page, immediate_score " +
+                             "FROM quizzes WHERE creator = ?")) {
+
             stmt.setString(1, username);
 
             try (ResultSet rs = stmt.executeQuery()) {
@@ -319,7 +321,7 @@ public class QuizDAO {
                             rs.getString("creator"),
                             rs.getString("date_created"),
                             rs.getBoolean("randomized"),
-                            rs.getBoolean("multipage"),
+                            rs.getBoolean("multi_page"),
                             rs.getBoolean("immediate_score")
                     ));
                 }
@@ -328,6 +330,7 @@ public class QuizDAO {
 
         return quizzes;
     }
+
 
     public static ArrayList<Quiz> getUnratedQuizzes(String username, int limit) throws SQLException {
         ArrayList<Quiz> quizzes = new ArrayList<>();
