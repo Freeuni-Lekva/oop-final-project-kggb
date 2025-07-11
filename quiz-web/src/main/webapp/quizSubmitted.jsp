@@ -21,7 +21,7 @@
 <div class="page-layout">
   <div class="main-content">
     <p>Your answers have been saved. You can review your results later.</p>
-    <a href="index.jsp">Return to Home</a>
+    <a href="frontPage.jsp">Return to Home</a>
   </div>
 </div>
 

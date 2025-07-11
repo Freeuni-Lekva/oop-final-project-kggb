@@ -1,11 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="Models.Announcement" %>
-<%@ page import="Models.Message" %>
-<%@ page import="Models.Quiz" %>
-<%@ page import="Models.QuizTakesHistory" %>
-<%@ page import="Models.Friend" %>
-<%@ page import="Models.Achievement" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="Models.*" %>
+<%@ page import="DAOs.QuizDAO" %>
 
 <%
     List<Announcement> announcements = (List<Announcement>) request.getAttribute("announcements");
@@ -16,6 +13,8 @@
     List<Quiz> createdQuizzes = (List<Quiz>) request.getAttribute("createdQuizzes");
     List<QuizTakesHistory> friendsHistory = (List<QuizTakesHistory>) request.getAttribute("friendsHistory");
     List<Achievement> achievements = (List<Achievement>) request.getAttribute("achievements");
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
 
 <jsp:include page="header.jsp" />
@@ -28,20 +27,15 @@
 <body>
 
 <div class="top-bar">
-
     <div class="top-left">
         <form action="createQuiz.jsp" method="get">
-            <button type="submit" class="action-button create-quiz-btn">
-                ➕ Create a Quiz
-            </button>
+            <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
         </form>
     </div>
 
     <div class="top-right">
         <div class="messages-dropdown-container">
-            <button id="messages-btn" class="action-button message-btn">
-                📩 Messages
-            </button>
+            <button id="messages-btn" class="action-button message-btn">📩 Messages</button>
             <div id="messages-dropdown" class="messages-dropdown hidden">
                 <% if (messages == null || messages.isEmpty()) { %>
                 <div class="message-item">You have no new messages.</div>
@@ -52,19 +46,13 @@
                     From: <a href="profile?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
                     <span><%= m.getMessage() %></span>
                 </div>
-                <%  }
-                } %>
+                <% } } %>
             </div>
         </div>
     </div>
-
 </div>
 
-
-
-
 <div class="page-layout">
-
     <div class="left-sidebar">
         <h2>Announcements</h2>
         <% if (announcements == null || announcements.isEmpty()) { %>
@@ -74,17 +62,13 @@
         <div>
             <a><%= a.getTitle() %></a><br/>
             <a><%= a.getMessage() %></a><br/>
-            <a><%= a.getCreatedAt() %></a>
+            <a><%= dateFormat.format(a.getCreatedAt()) %></a>
         </div>
-        <div>
-        </div>
-        <%  }
-        } %>
+        <% } } %>
         <a href="announcements.jsp">View all →</a>
     </div>
 
     <div class="main-content">
-
         <div class="section">
             <h2>Popular Quizzes</h2>
             <% if (popularQuizzes == null || popularQuizzes.isEmpty()) { %>
@@ -92,8 +76,7 @@
             <% } else {
                 for (Quiz q : popularQuizzes) { %>
             <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
-            <%  }
-            } %>
+            <% } } %>
         </div>
 
         <div class="section">
@@ -103,8 +86,7 @@
             <% } else {
                 for (Quiz q : recentQuizzes) { %>
             <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
-            <%  }
-            } %>
+            <% } } %>
         </div>
 
         <div class="section">
@@ -112,12 +94,14 @@
             <% if (quizTakesHistory == null || quizTakesHistory.isEmpty()) { %>
             <div>No recent quiz activity yet.</div>
             <% } else {
-                for (QuizTakesHistory quizTake : quizTakesHistory) { %>
+                for (QuizTakesHistory quizTake : quizTakesHistory) {
+                    Quiz q = QuizDAO.getQuiz(quizTake.getQuizId());
+                    String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
+            %>
             <div>
-                You took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a> on <%= quizTake.getTimeTaken() %>
+                You took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
-            <%  }
-            } %>
+            <% } } %>
         </div>
 
         <div class="section">
@@ -126,29 +110,26 @@
             <div>No created quizzes by you yet.</div>
             <% } else {
                 for (Quiz q : createdQuizzes) { %>
-            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>">Quiz <%= q.getId() %></a></div>
-            <%  }
-            } %>
+            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <% } } %>
         </div>
 
         <div class="section">
             <h2>Friends' Quiz Activity</h2>
-            <%
-                if (friendsHistory == null || friendsHistory.isEmpty()) {
-            %>
+            <% if (friendsHistory == null || friendsHistory.isEmpty()) { %>
             <div>No quiz activity from friends yet.</div>
             <% } else {
                 for (QuizTakesHistory quizTake : friendsHistory) {
+                    Quiz q = QuizDAO.getQuiz(quizTake.getQuizId());
+                    String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
             %>
             <div>
                 <a href="user.jsp?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
-                <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>">Quiz <%= quizTake.getQuizId() %></a> on
-                <%= quizTake.getTimeTaken() %>
+                <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on
+                <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
-            <%  }
-            } %>
+            <% } } %>
         </div>
-
     </div>
 
     <div class="right-sidebar">
@@ -158,11 +139,9 @@
         <% } else {
             for (Achievement ach : achievements) { %>
         <div>🏅 <%= ach.getName() %>: <%= ach.getDescription() %></div>
-        <%  }
-        } %>
+        <% } } %>
         <a href="achievements.jsp">View all →</a>
     </div>
-
 </div>
 
 <script>

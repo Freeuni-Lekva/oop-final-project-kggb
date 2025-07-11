@@ -24,11 +24,10 @@ public class TakeQuizServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String quizIdstr = request.getParameter("quizId");
-        if(quizIdstr == null || quizIdstr.isEmpty()) {
+        if (quizIdstr == null || quizIdstr.isEmpty()) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing quizId.");
             return;
         }
-
 
         try {
             long quizId = Long.parseLong(quizIdstr);
@@ -53,6 +52,14 @@ public class TakeQuizServlet extends HttpServlet {
             request.setAttribute("immediateScore", quiz.isImmediate_score());
 
             if (quiz.isMulti_page()) {
+                int questionIndex = 0;  // start with first question
+                int totalQuestions = allQuestions.size();
+                Object question = totalQuestions > 0 ? allQuestions.get(questionIndex) : null;
+
+                request.setAttribute("questionIndex", questionIndex);
+                request.setAttribute("totalQuestions", totalQuestions);
+                request.setAttribute("question", question);
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("takeQuizMultiPage.jsp");
                 dispatcher.forward(request, response);
             } else {
@@ -62,8 +69,6 @@ public class TakeQuizServlet extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
-
 }
+

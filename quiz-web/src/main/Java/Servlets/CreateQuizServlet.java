@@ -29,8 +29,8 @@ public class CreateQuizServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
+        String creator = (String) session.getAttribute("username");
 
-        String creator = (String) session.getAttribute("user");
         int id = 0;
 
         try {
