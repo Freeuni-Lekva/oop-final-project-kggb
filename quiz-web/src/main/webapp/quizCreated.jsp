@@ -5,6 +5,8 @@
 <head>
   <title>Quiz Created Successfully</title>
   <link rel="stylesheet" href="css/createQuiz.css" />
+  <link rel="icon" href="images/BRAINBUZZ.png">
+
 </head>
 <body>
 <div class="create-quiz-container" style="text-align:center;">

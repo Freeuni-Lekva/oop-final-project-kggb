@@ -21,6 +21,7 @@
 <head>
     <title>quiz.getName() %> - Take Quiz</title>
     <link rel="stylesheet" href="css/quiz.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
 </head>
 <body>
 

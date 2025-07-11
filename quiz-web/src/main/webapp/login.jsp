@@ -3,6 +3,8 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="css/welcome.css">
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 
 </head>
 <body>
@@ -28,7 +30,7 @@
 
     <button type="submit">Log In</button>
 </form>
-<img src="images/LetsGoBrain.png" style="max-height: 500px; width: auto;  margin: 20px auto;">
+<img src="images/LetsGoBrain.png" style="max-height: 250px; width: auto;  margin: 20px auto;">
 
 </body>
 </html>

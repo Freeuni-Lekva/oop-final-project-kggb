@@ -15,6 +15,8 @@
 <html>
 <head>
     <title>Taking Quiz: <%= quiz.getName() %></title>
+    <link rel="stylesheet" href="css/quiz.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
 </head>
 <body>
 <h2><%= quiz.getName() %> — Question <%= questionIndex + 1 %> of <%= totalQuestions %></h2>
