@@ -15,6 +15,7 @@ public class Challenge {
     private long challengerScore;
     private long challengedScore;
     private Timestamp createdAt;
+    private int challengerBestScore;
 
     public Challenge(long id, String challenger, String challenged, long quizID, String challengeMessage,
                      Timestamp sentAt, String status,long challengerScore, long challengedScore, Timestamp createdAt) {
@@ -90,6 +91,7 @@ public class Challenge {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
-
+    public int getChallengerBestScore() { return challengerBestScore; }
+    public void setChallengerBestScore(int challengerBestScore) { this.challengerBestScore = challengerBestScore; }
 
 }
