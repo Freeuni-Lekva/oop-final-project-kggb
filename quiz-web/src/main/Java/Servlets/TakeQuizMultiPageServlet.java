@@ -169,6 +169,15 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
             session.removeAttribute("multiPageQuestions");
             session.removeAttribute("quizId");
 
+            Quiz quiz = null;
+            try {
+                quiz = QuizDAO.getQuiz(quizId);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            request.getSession().setAttribute("quizId", quiz.getId());
+
+
             response.sendRedirect("quizResults.jsp?quizId=" + quizId);
 
         } else {
