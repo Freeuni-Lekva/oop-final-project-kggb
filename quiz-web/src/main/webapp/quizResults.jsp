@@ -4,10 +4,10 @@
 <jsp:include page="header.jsp" />
 
 <%
-    Integer score = (Integer) request.getAttribute("score");
-    Integer totalPoints = (Integer) request.getAttribute("totalPoints");
-    String quizName = (String) request.getAttribute("quizName");
-
+    Integer score = (Integer) session.getAttribute("score");
+    Integer totalPoints = (Integer) session.getAttribute("totalPoints");
+    String quizName = (String) session.getAttribute("quizName");
+    Long quizId = (Long) session.getAttribute("quizId");
 
 %>
 
@@ -28,6 +28,12 @@
 <div class="page-layout">
     <div class="main-content">
         <h3>Your Score: <%= score %> / <%= totalPoints %></h3>
+        <form action="ShowCorrectAnswersServlet" method="get" style="display: inline;">
+            <input type="hidden" name="quizId" value="<%= quizId %>"/>
+            <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                Show Correct Answers
+            </button>
+        </form>
         <form action="frontPage" method="get" style="display: inline;">
             <button type="submit" style="background-color: #4da6ff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
                 Home
