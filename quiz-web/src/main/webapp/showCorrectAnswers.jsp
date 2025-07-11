@@ -33,7 +33,9 @@
       Question q = questions.get(i);
       %>
     <div class="question-block">
+      <p>Points: <%= q.getPoints() %></p>
       <h3>Question <%=(i + 1)%> : <%=q.getQuestion()%></h3>
+
       <% if (q instanceof MultipleChoiceQuestion) {
         MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) q;
       %>
