@@ -5,7 +5,6 @@
 <%@ page import="DAOs.QuizDAO" %>
 
 <%
-    List<Announcement> announcements = (List<Announcement>) request.getAttribute("announcements");
     List<Message> messages = (List<Message>) request.getAttribute("messages");
     List<Quiz> popularQuizzes = (List<Quiz>) request.getAttribute("popularQuizzes");
     List<Quiz> recentQuizzes = (List<Quiz>) request.getAttribute("recentQuizzes");
@@ -22,53 +21,38 @@
 <html>
 <head>
     <title>Welcome</title>
-    <link rel="stylesheet" href="css/frontPage.css">
+    <link rel="stylesheet" href="css/smth.css">
 </head>
 <body>
 
+<!-- Top bar with centered buttons -->
 <div class="top-bar">
-    <div class="top-left">
-        <form action="createQuiz.jsp" method="get">
-            <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
-        </form>
-    </div>
+    <form action="createQuiz.jsp" method="get">
+        <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
+    </form>
 
-    <div class="top-right">
-        <div class="messages-dropdown-container">
-            <button id="messages-btn" class="action-button message-btn">📩 Messages</button>
-            <div id="messages-dropdown" class="messages-dropdown hidden">
-                <% if (messages == null || messages.isEmpty()) { %>
-                <div class="message-item">You have no new messages.</div>
-                <% } else {
-                    for (Message m : messages) { %>
-                <div class="message-item">
-                    <strong><%= m.getTitle() %></strong><br/>
-                    From: <a href="profile?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
-                    <span><%= m.getMessage() %></span>
-                </div>
-                <% } } %>
+    <div class="messages-dropdown-container">
+        <button id="messages-btn" class="action-button message-btn">📩 Messages</button>
+        <div id="messages-dropdown" class="messages-dropdown hidden">
+            <% if (messages == null || messages.isEmpty()) { %>
+            <div class="message-item">You have no new messages.</div>
+            <% } else {
+                for (Message m : messages) { %>
+            <div class="message-item">
+                <strong><%= m.getTitle() %></strong><br/>
+                From: <a href="profile?username=<%= m.getSentFrom() %>"><%= m.getSentFrom() %></a><br/>
+                <span><%= m.getMessage() %></span>
             </div>
+            <% } } %>
         </div>
     </div>
 </div>
 
+<!-- Main page layout with 3 columns -->
 <div class="page-layout">
-    <div class="left-sidebar">
-        <h2>Announcements</h2>
-        <% if (announcements == null || announcements.isEmpty()) { %>
-        <div>No announcements yet.</div>
-        <% } else {
-            for (Announcement a : announcements) { %>
-        <div>
-            <a><%= a.getTitle() %></a><br/>
-            <a><%= a.getMessage() %></a><br/>
-            <a><%= dateFormat.format(a.getCreatedAt()) %></a>
-        </div>
-        <% } } %>
-        <a href="announcements.jsp">View all →</a>
-    </div>
 
-    <div class="main-content">
+    <!-- Left column -->
+    <div class="left-content">
         <div class="section">
             <h2>Popular Quizzes</h2>
             <% if (popularQuizzes == null || popularQuizzes.isEmpty()) { %>
@@ -88,7 +72,10 @@
             <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <% } } %>
         </div>
+    </div>
 
+    <!-- Center column -->
+    <div class="center-content">
         <div class="section">
             <h2>Your Recent Quiz Activity</h2>
             <% if (quizTakesHistory == null || quizTakesHistory.isEmpty()) { %>
@@ -132,6 +119,7 @@
         </div>
     </div>
 
+    <!-- Right column -->
     <div class="right-sidebar">
         <h2>Achievements</h2>
         <% if (achievements == null || achievements.isEmpty()) { %>
@@ -142,6 +130,7 @@
         <% } } %>
         <a href="achievements.jsp">View all →</a>
     </div>
+
 </div>
 
 <script>
