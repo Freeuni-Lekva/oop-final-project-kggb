@@ -49,7 +49,7 @@ public class GradeQuizServlet extends HttpServlet {
                 request.setAttribute("score", score);
                 request.setAttribute("totalPoints", maxScore);
                 request.setAttribute("quizName", quiz.getName());
-                request.getRequestDispatcher("quizResult.jsp").forward(request, response);
+                request.getRequestDispatcher("quizResults.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("quizSubmitted.jsp").forward(request, response);
             }

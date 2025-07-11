@@ -23,7 +23,6 @@
     <input type="hidden" name="questionIndex" value="<%= questionIndex %>"/>
     <input type="hidden" name="quizId" value="<%= quiz.getId() %>" />
 
-    <%-- Render the correct question type --%>
     <%
         if (question instanceof MultipleChoiceQuestion) {
             MultipleChoiceQuestion q = (MultipleChoiceQuestion) question;
