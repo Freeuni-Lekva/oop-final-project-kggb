@@ -20,6 +20,8 @@
 <head>
     <title>Send Message</title>
     <link rel="stylesheet" href="css/welcome.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 
 </head>
 <body>

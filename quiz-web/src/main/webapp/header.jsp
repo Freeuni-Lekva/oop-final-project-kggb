@@ -10,6 +10,8 @@
 %>
 
 <link rel="stylesheet" href="css/welcome.css" />
+<link rel="icon" href="images/BRAINBUZZ.png">
+
 
 <div id="header">
     <div class="header-content" style="display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; max-width: 1200px; margin: 0 auto;">

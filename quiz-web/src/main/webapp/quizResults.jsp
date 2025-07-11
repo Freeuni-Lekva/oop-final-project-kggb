@@ -4,27 +4,21 @@
 <jsp:include page="header.jsp" />
 
 <%
-    Integer score = (Integer) session.getAttribute("score");
-    Integer totalPoints = (Integer) session.getAttribute("totalPoints");
-    String quizName = (String) session.getAttribute("quizName");
+    Integer score = (Integer) request.getAttribute("score");
+    Integer totalPoints = (Integer) request.getAttribute("totalPoints");
+    String quizName = (String) request.getAttribute("quizName");
 
-    if (score == null || totalPoints == null || quizName == null) {
-%>
-<div class="error-message">Error: Results not available.</div>
-<a href="frontPage.jsp">Return to Home</a>
-<%
-        return;
-    }
 
-    session.removeAttribute("score");
-    session.removeAttribute("totalPoints");
-    session.removeAttribute("quizName");
 %>
+
+
 
 <html>
 <head>
     <title>Results for <%= quizName %></title>
     <link rel="stylesheet" href="css/quiz.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 </head>
 <body>
 <div class="top-bar">
@@ -34,7 +28,11 @@
 <div class="page-layout">
     <div class="main-content">
         <h3>Your Score: <%= score %> / <%= totalPoints %></h3>
-        <a href="frontPage.jsp">Return to Home</a>
+        <form action="frontPage" method="get" style="display: inline;">
+            <button type="submit" style="background-color: #4da6ff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+                Home
+            </button>
+        </form>
     </div>
 </div>
 </body>

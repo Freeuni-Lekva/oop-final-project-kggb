@@ -12,6 +12,8 @@
 <head>
     <title>Quiz Submitted</title>
     <link rel="stylesheet" href="css/quiz.css" />
+    <link rel="icon" href="images/BRAINBUZZ.png">
+
 </head>
 <body>
 <div class="top-bar">
@@ -21,7 +23,11 @@
 <div class="page-layout">
   <div class="main-content">
     <p>Your answers have been saved. You can review your results later.</p>
-    <a href="frontPage.jsp">Return to Home</a>
+      <form action="frontPage" method="get" style="display: inline;">
+          <button type="submit" style="background-color: #4da6ff; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Home
+          </button>
+      </form>
   </div>
 </div>
 
