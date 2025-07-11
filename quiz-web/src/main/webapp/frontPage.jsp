@@ -47,9 +47,16 @@
             <div class="message-item">
                 <strong>From:</strong> <a href="profile?username=<%= c.getChallenger() %>"><%= c.getChallenger() %></a><br/>
                 <strong>Quiz:</strong> <a href="QuizSummaryServlet?quizId=<%= c.getQuizID() %>"><%= quizName %></a><br/>
-                <strong>Message:</strong> <%= c.getChallengeMessage() %>
+                <strong>Message:</strong> <%= c.getChallengeMessage() %><br/>
+                <strong>Challenger's Best Score:</strong> <%= c.getChallengerBestScore() %><br/>
+                <form method="get" action="TakeQuizMultiPageServlet" style="margin-top: 5px;">
+                    <input type="hidden" name="quizId" value="<%= c.getQuizID() %>">
+                    <button type="submit">Take Challenge</button>
+                </form>
             </div>
             <% } } %>
+
+
         </div>
     </div>
 

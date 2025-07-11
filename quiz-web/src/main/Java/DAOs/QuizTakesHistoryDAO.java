@@ -282,4 +282,20 @@ public class QuizTakesHistoryDAO {
         return 0;
     }
 
+    public static int getBestScoreForUserOnQuiz(String username, long quizId) throws SQLException {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT MAX(score) FROM quiz_takes_history WHERE username = ? AND quiz_id = ?";
+            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setString(1, username);
+                ps.setLong(2, quizId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
 }

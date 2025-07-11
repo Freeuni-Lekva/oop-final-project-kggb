@@ -31,12 +31,6 @@ public class FinishQuizServlet extends HttpServlet {
             totalQuestions += new TrueOrFalseQuestionDAO().getQuestionsByQuizId(quizId).size();
             totalQuestions += new PictureResponseQuestionDAO().getQuestionsByQuizId(quizId).size();
 
-            if (totalQuestions < 3) {
-                request.setAttribute("error", "You must add at least 3 questions before finishing.");
-                request.setAttribute("quizId", quizId);
-                request.getRequestDispatcher("addQuestion.jsp").forward(request, response);
-                return;
-            }
 
             response.sendRedirect("quizCreated.jsp");
 

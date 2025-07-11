@@ -35,8 +35,14 @@ public class FrontPageServlet extends HttpServlet {
             List<UserAchievement> achievements = UserAchievementDAO.getUserAchievements(username);
             List<Message> messages = MessageDAO.messagesSentToUser(username);
             List<QuizTakesHistory> friendsHistory = QuizTakesHistoryDAO.getRecentTakesByFriends(username);
-
             List<Challenge> challenges = ChallengeDAO.getChallengesSentToUser(username);
+
+            for (Challenge challenge : challenges) {
+                long quizId = challenge.getQuizID();
+                String challenger = challenge.getChallenger();
+                int bestScore = QuizTakesHistoryDAO.getBestScoreForUserOnQuiz(challenger, quizId);
+                challenge.setChallengerBestScore(bestScore);
+            }
 
             Map<Long, String> quizIdToName = new HashMap<>();
             for (QuizTakesHistory h : quizTakesHistory) {
@@ -70,7 +76,6 @@ public class FrontPageServlet extends HttpServlet {
             request.setAttribute("achievements", achievements);
             request.setAttribute("messages", messages);
             request.setAttribute("friendsHistory", friendsHistory);
-
             request.setAttribute("challenges", challenges);
             request.setAttribute("quizIdToName", quizIdToName);
 
