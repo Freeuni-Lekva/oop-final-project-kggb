@@ -27,7 +27,6 @@
 </head>
 <body>
 
-<!-- Top bar with centered buttons -->
 <div class="top-bar">
     <form action="createQuiz.jsp" method="get">
         <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
@@ -50,10 +49,8 @@
     </div>
 </div>
 
-<!-- Main page layout with 3 columns -->
 <div class="page-layout">
 
-    <!-- Left column -->
     <div class="left-content">
         <div class="section">
             <h2>Popular Quizzes</h2>
@@ -76,7 +73,6 @@
         </div>
     </div>
 
-    <!-- Center column -->
     <div class="center-content">
         <div class="section">
             <h2>Your Recent Quiz Activity</h2>
@@ -121,7 +117,6 @@
         </div>
     </div>
 
-    <!-- Right column -->
     <div class="right-sidebar">
         <h2>Achievements</h2>
         <% if (achievements == null || achievements.isEmpty()) { %>

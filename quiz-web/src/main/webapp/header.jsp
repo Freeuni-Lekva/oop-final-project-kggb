@@ -21,15 +21,27 @@
         </div>
 
         <div class="search-bar" style="text-align: right">
-            <form action="search.jsp" method="get" class="quiz-search" style="display: flex; align-items: center; gap: 5px;">
-                <input type="text" name="query" placeholder="Search quiz" style="width: 200px; padding: 5px;" />
+            <form action="SearchQuizServlet" method="get" style="display: flex; align-items: center; gap: 5px;">
+                <label>
+                    <input type="text" name="quizName" placeholder="Search quiz name" style="width: 200px; padding: 5px;" required />
+                </label>
                 <button type="submit" style="padding: 5px 10px;">Search</button>
             </form>
 
             <form action="profile" method="get" class="user-search" style="display: flex; align-items: center; gap: 5px;">
-                <input type="text" name="username" placeholder="Search user" required style="width: 200px; padding: 5px;" />
+                <label>
+                    <input type="text" name="username" placeholder="Search user" required style="width: 200px; padding: 5px;" />
+                </label>
                 <button type="submit" style="padding: 5px 10px;">Search</button>
             </form>
+
+            <form action="CategorySearchServlet" method="get" style="display: flex; align-items: center; gap: 5px;">
+                <label>
+                    <input type="text" name="category" placeholder="Search category" required style="width: 200px; padding: 5px;" />
+                </label>
+                <button type="submit" style="padding: 5px 10px;">Search</button>
+            </form>
+
         </div>
 
         <div class="nav-links">
