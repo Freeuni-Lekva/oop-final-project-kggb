@@ -108,7 +108,7 @@
                     String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
             %>
             <div>
-                <a href="user.jsp?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
+                <a href="profile?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
                 <a href="QuizSummaryServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on
                 <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>

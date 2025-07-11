@@ -39,10 +39,8 @@
             <label for="multiPage">Multiple Pages (one question at a time)</label><br><br>
 
             <input type="checkbox" id="immediateCorrection" name="immediateCorrection">
-            <label for="immediateCorrection">Enable immediate correction (only for multi-page mode)</label><br><br>
+            <label for="immediateCorrection">Enable immediate correction</label><br><br>
 
-            <input type="checkbox" id="practiceMode" name="practiceMode">
-            <label for="practiceMode">Allow practice mode</label><br>
         </fieldset><br>
 
         <button type="submit">Create Quiz</button>

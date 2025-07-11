@@ -59,10 +59,11 @@
             <input type="hidden" name="immediateScore" value="<%= immediateScore %>"/>
 
             <% for (int i = 0; i < questions.size(); i++) {
-                Object q = questions.get(i);
+                Question q = (Question)questions.get(i);
             %>
             <div class="question-block">
                 <h3>Question <%= (i + 1) %>:</h3>
+                <p>Points: <%=q.getPoints()%></p>
                 <% if (q instanceof MultipleChoiceQuestion) {
                     MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) q;
                 %>

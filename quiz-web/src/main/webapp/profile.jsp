@@ -42,7 +42,7 @@
 <h1><%= profileUser.getUsername() %>'s Profile</h1>
 
 <div class="page-layout">
-    <div class="main-content">
+    <div class="main-content" style="max-width: 600px; margin: 0 auto; background-color: white; padding: 20px 30px; border-radius: 8px;">
         <div class="section">
             <h2>Profile Info</h2>
             <p><strong>Username:</strong> <%= profileUser.getUsername() %></p>
