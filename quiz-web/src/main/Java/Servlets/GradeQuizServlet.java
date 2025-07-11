@@ -19,15 +19,13 @@ import java.util.List;
 public class GradeQuizServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+
+            HttpSession session = request.getSession();
+
             long quizId = Long.parseLong(request.getParameter("quizId"));
             boolean immediateScore = Boolean.parseBoolean(request.getParameter("immediateScore"));
 
-            Quiz quiz = QuizDAO.getQuiz(quizId);
-            List<Question> questions = new ArrayList<>();
-            questions.addAll(MultipleChoiceQuestionDAO.getQuestionsByQuizId(quizId));
-            questions.addAll(TrueOrFalseQuestionDAO.getQuestionsByQuizId(quizId));
-            questions.addAll(FillInTheBlankQuestionDAO.getQuestionsByQuizId(quizId));
-            questions.addAll(PictureResponseQuestionDAO.getQuestionsByQuizId(quizId));
+            List<Question> questions = (List<Question>) session.getAttribute("questionsForGrading");
 
             int score = 0;
             int maxScore = 0;
@@ -46,7 +44,8 @@ public class GradeQuizServlet extends HttpServlet {
                 new QuizTakesHistoryDAO().addQuizTake(take);
             }
 
-            HttpSession session = request.getSession();
+            Quiz quiz = QuizDAO.getQuiz(quizId);
+
             if (immediateScore) {
                 session.setAttribute("score", score);
                 session.setAttribute("totalPoints", maxScore);

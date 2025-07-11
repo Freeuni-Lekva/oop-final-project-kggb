@@ -47,14 +47,16 @@ public class TakeQuizServlet extends HttpServlet {
                 Collections.shuffle(allQuestions);
             }
 
+            request.getSession().setAttribute("questionsForGrading", allQuestions);
             request.setAttribute("quiz", quiz);
             request.setAttribute("questions", allQuestions);
             request.setAttribute("immediateScore", quiz.isImmediate_score());
 
             if (quiz.isMulti_page()) {
-                int questionIndex = 0;  // start with first question
+                int questionIndex = 0;
                 int totalQuestions = allQuestions.size();
                 Object question = totalQuestions > 0 ? allQuestions.get(questionIndex) : null;
+
 
                 request.setAttribute("questionIndex", questionIndex);
                 request.setAttribute("totalQuestions", totalQuestions);
