@@ -16,15 +16,15 @@
 </head>
 <body>
 
-<div class="section" style="padding: 20px;">
-  <h2>Search Results for "<%= quizName %>"</h2>
+<div class="section" style="max-width: 600px; margin: 0 auto; background-color: white; padding: 20px 30px; border-radius: 8px;">
+  <h2>Search Results for Quiz: "<%= quizName %>"</h2>
 
   <% if (results == null || results.isEmpty()) { %>
   <div>No quizzes found.</div>
   <% } else {
     for (Quiz q : results) { %>
   <div style="margin: 10px 0;">
-    <a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a>
+    <a href="QuizSummaryServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a>
   </div>
   <% } } %>
 </div>
