@@ -1,17 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="Models.Quiz" %>
-<%@ page import="Models.MultipleChoiceQuestion" %>
-<%@ page import="Models.TrueFalseQuestion" %>
-<%@ page import="Models.FillInTheBlankQuestion" %>
-<%@ page import="Models.PictureResponseQuestion" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.List" %>
+<%@ page import="Models.*" %>
 
 <jsp:include page="header.jsp" />
 
 
 <%
     Object question = request.getAttribute("question");
+    Question question1 = (Question)question;
     int questionIndex = (Integer) request.getAttribute("questionIndex");
     int totalQuestions = (Integer) request.getAttribute("totalQuestions");
     Quiz quiz = (Quiz) request.getAttribute("quiz");
@@ -25,6 +22,8 @@
 </head>
 <body>
 <h2><%= quiz.getName() %> — Question <%= questionIndex + 1 %> of <%= totalQuestions %></h2>
+<p>Points: <%=question1.getPoints()%></p>
+
 
 <div style="max-width: 600px; margin: 0 auto; background-color: white; padding: 20px 30px; border-radius: 8px;">
 
