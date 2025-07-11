@@ -1,15 +1,11 @@
 package Servlets;
-import DAOs.*;
-import Models.Question;
-import Models.Quiz;
 
-import javax.servlet.RequestDispatcher;
+import DAOs.*;
+import Models.*;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
@@ -64,8 +60,9 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
             request.setAttribute("questionIndex", questionIndex);
             request.setAttribute("totalQuestions", allQuestions.size());
 
-            request.getSession().setAttribute("multiPageQuestions", allQuestions);
-            request.getSession().setAttribute("quizId", quizId);
+            HttpSession session = request.getSession();
+            session.setAttribute("multiPageQuestions", allQuestions);
+            session.setAttribute("quizId", quizId);
 
             request.getRequestDispatcher("takeQuizMultiPage.jsp").forward(request, response);
 
@@ -77,12 +74,31 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        List<Object> allQuestions = (List<Object>) session.getAttribute("multiPageQuestions");
-        Long quizId = (Long) session.getAttribute("quizId");
 
-        if (allQuestions == null || quizId == null) {
-            response.sendRedirect("frontPage.jsp");
-            return;
+        Long quizId = (Long) session.getAttribute("quizId");
+        if (quizId == null) {
+            try {
+                quizId = Long.parseLong(request.getParameter("quizId"));
+                session.setAttribute("quizId", quizId);
+            } catch (NumberFormatException e) {
+                response.sendRedirect("frontPage.jsp");
+                return;
+            }
+        }
+
+        List<Object> allQuestions = (List<Object>) session.getAttribute("multiPageQuestions");
+        if (allQuestions == null) {
+            try {
+                allQuestions = new ArrayList<>();
+                allQuestions.addAll(MultipleChoiceQuestionDAO.getQuestionsByQuizId(quizId));
+                allQuestions.addAll(TrueOrFalseQuestionDAO.getQuestionsByQuizId(quizId));
+                allQuestions.addAll(PictureResponseQuestionDAO.getQuestionsByQuizId(quizId));
+                allQuestions.addAll(FillInTheBlankQuestionDAO.getQuestionsByQuizId(quizId));
+                session.setAttribute("multiPageQuestions", allQuestions);
+            } catch (SQLException e) {
+                response.sendRedirect("frontPage.jsp");
+                return;
+            }
         }
 
         int questionIndex = Integer.parseInt(request.getParameter("questionIndex"));
@@ -98,11 +114,63 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
         int nextQuestionIndex = questionIndex + 1;
 
         if (nextQuestionIndex >= allQuestions.size()) {
+            int score = 0;
+            int totalPoints = 0;
+
+            for (int i = 0; i < allQuestions.size(); i++) {
+                Object q = allQuestions.get(i);
+                String userAnswer = answers.get(i);
+
+                if (q instanceof MultipleChoiceQuestion) {
+                    MultipleChoiceQuestion mc = (MultipleChoiceQuestion) q;
+                    totalPoints += mc.getPoints();
+                    if (mc.getCorrectAnswer().equalsIgnoreCase(userAnswer)) {
+                        score += mc.getPoints();
+                    }
+
+                } else if (q instanceof TrueFalseQuestion) {
+                    TrueFalseQuestion tf = (TrueFalseQuestion) q;
+                    totalPoints += tf.getPoints();
+                    if (Boolean.toString(tf.isCorrectAnswer()).equalsIgnoreCase(userAnswer)) {
+                        score += tf.getPoints();
+                    }
+
+                } else if (q instanceof FillInTheBlankQuestion) {
+                    FillInTheBlankQuestion fib = (FillInTheBlankQuestion) q;
+                    totalPoints += fib.getPoints();
+                    boolean match = fib.isCaseSensitive() ?
+                            fib.getCorrectAnswer().equals(userAnswer) :
+                            fib.getCorrectAnswer().equalsIgnoreCase(userAnswer);
+                    if (match) {
+                        score += fib.getPoints();
+                    }
+
+                } else if (q instanceof PictureResponseQuestion) {
+                    PictureResponseQuestion pr = (PictureResponseQuestion) q;
+                    totalPoints += pr.getPoints();
+                    if (pr.getCorrectAnswer().equalsIgnoreCase(userAnswer)) {
+                        score += pr.getPoints();
+                    }
+                }
+            }
+
+            String quizName = "Quiz";
+            try {
+                Quiz quiz = QuizDAO.getQuiz(quizId);
+                if (quiz != null) {
+                    quizName = quiz.getName();
+                }
+            } catch (SQLException ignored) {}
+
+            session.setAttribute("score", score);
+            session.setAttribute("totalPoints", totalPoints);
+            session.setAttribute("quizName", quizName);
+
             session.removeAttribute("multiPageQuestions");
-            session.removeAttribute("multiPageAnswers");
             session.removeAttribute("quizId");
 
             response.sendRedirect("quizResults.jsp?quizId=" + quizId);
+
         } else {
             response.sendRedirect("TakeQuizMultiPageServlet?quizId=" + quizId + "&q=" + nextQuestionIndex);
         }
