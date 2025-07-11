@@ -112,7 +112,7 @@
                     String title = (quiz != null) ? quiz.getName() : "Quiz " + quizTake.getQuizId();
             %>
             <div>
-                Took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a><br/>
+                Took <a href="QuizSummaryServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a><br/>
                 Score: <%= quizTake.getScore() %><br/>
                 Date: <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
@@ -126,7 +126,7 @@
             <% } else {
                 for (Quiz cq : createdQuizzes) { %>
             <div>
-                <a href="TakeQuizServlet?quizId=<%= cq.getId() %>"><%= cq.getName() %></a><br/>
+                <a href="QuizSummaryServlet?quizId=<%= cq.getId() %>"><%= cq.getName() %></a><br/>
                 <span><%= cq.getDescription() %></span>
             </div>
             <%  } } %>

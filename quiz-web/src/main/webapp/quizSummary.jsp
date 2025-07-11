@@ -30,7 +30,7 @@
     <p><strong>Description:</strong> <%= quiz.getDescription() %></p>
     <p><strong>Category:</strong> <%= quiz.getCategory() %></p>
     <p><strong>Created on:</strong> <%= quiz.getCreation_date() %></p>
-    <p><strong>Created by:</strong> <a href="user.jsp?username=<%= quiz.getCreator() %>"><%= quiz.getCreator() %></a></p>
+    <p><strong>Created by:</strong> <a href="profile?username=<%= quiz.getCreator() %>"><%= quiz.getCreator() %></a></p>
 
     <form action="TakeQuizServlet" method="get">
         <input type="hidden" name="quizId" value="<%= quiz.getId() %>">
@@ -39,81 +39,85 @@
 
     <hr/>
 
-    <h2>Your Past Attempts</h2>
-    <% if (userAttempts.isEmpty()) { %>
-    <p>No attempts yet.</p>
-    <% } else { %>
-    <table border="1">
-        <tr><th>Date</th><th>Score</th><th>Time Spent</th></tr>
-        <% for (QuizTakesHistory h : userAttempts) { %>
-        <tr>
-            <td><%= sdf.format(h.getTimeTaken()) %></td>
-            <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
-            <td><%= h.getTimeSpent() %></td>
-        </tr>
+    <div class="main-content" style="max-width: 2000px; margin: 0 auto; background-color: white; padding: 20px 30px; border-radius: 8px;">
+
+        <h2>Your Past Attempts</h2>
+        <% if (userAttempts.isEmpty()) { %>
+        <p>No attempts yet.</p>
+        <% } else { %>
+        <table border="1">
+            <tr><th>Date</th><th>Score</th><th>Time Spent</th></tr>
+            <% for (QuizTakesHistory h : userAttempts) { %>
+            <tr>
+                <td><%= sdf.format(h.getTimeTaken()) %></td>
+                <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
+                <td><%= h.getTimeSpent() %></td>
+            </tr>
+            <% } %>
+        </table>
         <% } %>
-    </table>
-    <% } %>
 
-    <hr/>
+        <hr/>
 
-    <h2>Top Performers (All Time)</h2>
-    <% if (topAllTime.isEmpty()) { %>
-    <p>No scores yet.</p>
-    <% } else { %>
-    <table border="1">
-        <tr><th>User</th><th>Score</th><th>Date</th></tr>
-        <% for (QuizTakesHistory h : topAllTime) { %>
-        <tr>
-            <td><a href="user.jsp?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
-            <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
-            <td><%= sdf.format(h.getTimeTaken()) %></td>
-        </tr>
+        <h2>Top Performers (All Time)</h2>
+        <% if (topAllTime.isEmpty()) { %>
+        <p>No scores yet.</p>
+        <% } else { %>
+        <table border="1">
+            <tr><th>User</th><th>Score</th><th>Date</th></tr>
+            <% for (QuizTakesHistory h : topAllTime) { %>
+            <tr>
+                <td><a href="profile?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
+                <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
+                <td><%= sdf.format(h.getTimeTaken()) %></td>
+            </tr>
+            <% } %>
+        </table>
         <% } %>
-    </table>
-    <% } %>
 
-    <h2>Top Performers (Last 24h)</h2>
-    <% if (topToday.isEmpty()) { %>
-    <p>No scores in the last day.</p>
-    <% } else { %>
-    <table border="1">
-        <tr><th>User</th><th>Score</th><th>Date</th></tr>
-        <% for (QuizTakesHistory h : topToday) { %>
-        <tr>
-            <td><a href="user.jsp?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
-            <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
-            <td><%= sdf.format(h.getTimeTaken()) %></td>
-        </tr>
+        <h2>Top Performers (Last 24h)</h2>
+        <% if (topToday.isEmpty()) { %>
+        <p>No scores in the last day.</p>
+        <% } else { %>
+        <table border="1">
+            <tr><th>User</th><th>Score</th><th>Date</th></tr>
+            <% for (QuizTakesHistory h : topToday) { %>
+            <tr>
+                <td><a href="profile?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
+                <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
+                <td><%= sdf.format(h.getTimeTaken()) %></td>
+            </tr>
+            <% } %>
+        </table>
         <% } %>
-    </table>
-    <% } %>
 
-    <hr/>
+        <hr/>
 
-    <h2>Recent Attempts</h2>
-    <% if (recentAttempts.isEmpty()) { %>
-    <p>No recent attempts yet.</p>
-    <% } else { %>
-    <table border="1">
-        <tr><th>User</th><th>Score</th><th>Date</th></tr>
-        <% for (QuizTakesHistory h : recentAttempts) { %>
-        <tr>
-            <td><a href="user.jsp?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
-            <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
-            <td><%= sdf.format(h.getTimeTaken()) %></td>
-        </tr>
+        <h2>Recent Attempts</h2>
+        <% if (recentAttempts.isEmpty()) { %>
+        <p>No recent attempts yet.</p>
+        <% } else { %>
+        <table border="1">
+            <tr><th>User</th><th>Score</th><th>Date</th></tr>
+            <% for (QuizTakesHistory h : recentAttempts) { %>
+            <tr>
+                <td><a href="profile?username=<%= h.getUsername() %>"><%= h.getUsername() %></a></td>
+                <td><%= h.getScore() %> / <%= h.getMaxScore() %></td>
+                <td><%= sdf.format(h.getTimeTaken()) %></td>
+            </tr>
+            <% } %>
+        </table>
         <% } %>
-    </table>
-    <% } %>
 
-    <hr/>
+        <hr/>
 
-    <h2>Quiz Stats</h2>
-    <p><strong>Total Attempts:</strong> <%= totalAttempts %></p>
-    <p><strong>Average Score:</strong> <%= df.format(avg) %>%</p>
-    <p><strong>Highest Score:</strong> <%= df.format(max) %>%</p>
-    <p><strong>Lowest Score:</strong> <%= df.format(min) %>%</p>
+        <h2>Quiz Stats</h2>
+        <p><strong>Total Attempts:</strong> <%= totalAttempts %></p>
+        <p><strong>Average Score:</strong> <%= df.format(avg) %>%</p>
+        <p><strong>Highest Score:</strong> <%= df.format(max) %>%</p>
+        <p><strong>Lowest Score:</strong> <%= df.format(min) %>%</p>
+
+    </div>
 
 </div>
 

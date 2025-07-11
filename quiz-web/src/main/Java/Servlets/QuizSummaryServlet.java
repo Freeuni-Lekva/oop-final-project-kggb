@@ -33,7 +33,6 @@ public class QuizSummaryServlet extends HttpServlet {
 
             String currentUser = (String) request.getSession().getAttribute("username");
 
-            // Fetch required data
             List<QuizTakesHistory> userAttempts = QuizTakesHistoryDAO.getUserAttemptsOnQuiz(currentUser, quizId);
             List<QuizTakesHistory> topAllTime = QuizTakesHistoryDAO.getTopPerformersAllTime(quizId);
             List<QuizTakesHistory> topToday = QuizTakesHistoryDAO.getTopPerformersToday(quizId);
@@ -44,7 +43,6 @@ public class QuizSummaryServlet extends HttpServlet {
             double minScore = QuizTakesHistoryDAO.getMinScore(quizId);
             int totalAttempts = QuizTakesHistoryDAO.getTotalAttempts(quizId);
 
-            // Pass all data to JSP
             request.setAttribute("quiz", quiz);
             request.setAttribute("userAttempts", userAttempts);
             request.setAttribute("topAllTime", topAllTime);

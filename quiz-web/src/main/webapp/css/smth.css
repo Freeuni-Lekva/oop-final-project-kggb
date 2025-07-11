@@ -34,7 +34,6 @@ img {
     border-radius: 12px;
 }
 
-/* Top bar with centered buttons */
 .top-bar {
     display: flex;
     justify-content: center;
@@ -42,7 +41,6 @@ img {
     margin-bottom: 40px;
 }
 
-/* Buttons */
 .action-button {
     background-color: #b88ce5;  /* darker purple */
     border: none;
@@ -61,7 +59,6 @@ img {
     transform: scale(1.05);
 }
 
-/* Page layout - 3 columns */
 .page-layout {
     display: flex;
     justify-content: space-between;
@@ -69,7 +66,6 @@ img {
     align-items: flex-start;
 }
 
-/* Left, center and right columns */
 .left-content,
 .center-content,
 .right-sidebar {
@@ -81,7 +77,6 @@ img {
     font-size: 14px;
 }
 
-/* Widths for columns */
 .left-content {
     width: 25%;
 }
@@ -94,7 +89,6 @@ img {
     width: 25%;
 }
 
-/* Sections */
 .section {
     margin-bottom: 30px;
 }
@@ -109,7 +103,6 @@ img {
     margin: 6px 0;
 }
 
-/* Messages dropdown */
 .messages-dropdown {
     position: absolute;
     right: 10px;
@@ -134,7 +127,6 @@ img {
     border-bottom: none;
 }
 
-/* Responsive for smaller screens */
 @media (max-width: 900px) {
     .page-layout {
         flex-direction: column;
@@ -195,12 +187,15 @@ img {
     padding-bottom: 0;
 }
 
-/* Make the no messages text small, soft, and centered */
 .message-item:only-child {
     color: #777;
     font-style: italic;
     font-size: 10px;
     text-align: center;
     padding: 6px;
+}
+
+.hidden {
+ display: none;
 }
 
