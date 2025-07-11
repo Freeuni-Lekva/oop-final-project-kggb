@@ -43,6 +43,30 @@ public class ChallengeDAO {
 
     }
 
+    public static ArrayList<Challenge> getChallengesSentToUser(String username) throws SQLException {
+        ArrayList<Challenge> challenges = new ArrayList<>();
+        try(Connection connection = DBConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM challenges WHERE challenged = ?")) {
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                challenges.add(new Challenge(
+                        resultSet.getLong("id"),
+                        resultSet.getString("challenger"),
+                        resultSet.getString("challenged"),
+                        resultSet.getLong("quiz_id"),
+                        resultSet.getString("challenge_message"),
+                        resultSet.getTimestamp("sent_at"),
+                        resultSet.getString("status"),
+                        resultSet.getLong("challenger_score"),
+                        resultSet.getLong("challenged_score"),
+                        resultSet.getTimestamp("completed_at")
+                ));
+            }
+        }
+        return challenges;
+    }
+
     public static ArrayList<Challenge> getAllChallenges() throws SQLException {
         ArrayList<Challenge> challenges = new ArrayList<>();
         try(Connection connection = DBConnection.getConnection();

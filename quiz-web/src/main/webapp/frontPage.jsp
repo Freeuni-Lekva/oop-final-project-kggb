@@ -32,12 +32,11 @@
         <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
     </form>
 
-    <!-- Challenges -->
-    <div class="challenges-dropdown-container">
-        <button id="challenges-btn" class="action-button challenge-btn">🎯 Challenges</button>
-        <div id="challenges-dropdown" class="challenges-dropdown hidden">
+    <div class="messages-dropdown-container">
+        <button id="challenges-btn" class="action-button message-btn">🎯 Challenges</button>
+        <div id="challenges-dropdown" class="messages-dropdown hidden">
             <% if (challenges == null || challenges.isEmpty()) { %>
-            <div class="challenge-item">No challenges yet.</div>
+            <div class="message-item">You have no challenges yet.</div>
             <% } else {
                 for (Challenge c : challenges) {
                     String quizName = quizIdToName.get(c.getQuizID());
@@ -45,16 +44,15 @@
                         quizName = "Quiz " + c.getQuizID();
                     }
             %>
-            <div class="challenge-item">
-                From: <a href="profile?username=<%= c.getChallenger() %>"><%= c.getChallenger() %></a><br/>
-                Quiz: <a href="QuizSummaryServlet?quizId=<%= c.getQuizID() %>"><%= quizName %></a><br/>
-                Message: <%= c.getChallengeMessage() %>
+            <div class="message-item">
+                <strong>From:</strong> <a href="profile?username=<%= c.getChallenger() %>"><%= c.getChallenger() %></a><br/>
+                <strong>Quiz:</strong> <a href="QuizSummaryServlet?quizId=<%= c.getQuizID() %>"><%= quizName %></a><br/>
+                <strong>Message:</strong> <%= c.getChallengeMessage() %>
             </div>
             <% } } %>
         </div>
     </div>
 
-    <!-- Messages -->
     <div class="messages-dropdown-container">
         <button id="messages-btn" class="action-button message-btn">📩 Messages</button>
         <div id="messages-dropdown" class="messages-dropdown hidden">
