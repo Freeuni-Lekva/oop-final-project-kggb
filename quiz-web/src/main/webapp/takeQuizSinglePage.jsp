@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Models.*" %>
+<%@ page import="java.util.Collections" %>
 
 <%
     Quiz quiz = (Quiz) request.getAttribute("quiz");
@@ -69,6 +70,7 @@
                 %>
                 <p><%= mcq.getQuestion() %></p>
                 <% List<String> choices = mcq.getChoices();
+                    Collections.shuffle(choices);
                     for (String choice : choices) { %>
                 <label>
                     <input type="radio" name="q<%=i%>" value="<%= choice %>"> <%= choice %>
