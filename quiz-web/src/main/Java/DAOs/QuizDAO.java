@@ -363,4 +363,27 @@ public class QuizDAO {
 
         return quizzes;
     }
+
+    public static Quiz getQuizByName(String quizName) throws SQLException {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM quizzes WHERE quiz_name = ? LIMIT 1")) {
+            ps.setString(1, quizName);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new Quiz(
+                        rs.getLong("id"),
+                        rs.getString("quiz_name"),
+                        rs.getString("category"),
+                        rs.getString("description"),
+                        rs.getString("creator"),
+                        rs.getString("date_created"),
+                        rs.getBoolean("randomized"),
+                        rs.getBoolean("multi_page"),
+                        rs.getBoolean("immediate_score")
+                );
+            }
+        }
+        return null;
+    }
+
 }

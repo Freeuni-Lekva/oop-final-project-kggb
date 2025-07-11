@@ -28,12 +28,11 @@
     <title><%= profileUser != null ? profileUser.getUsername() : "User" %>'s Profile</title>
     <link rel="stylesheet" href="css/frontPage.css" />
     <link rel="icon" href="images/BRAINBUZZ.png">
-
 </head>
 <body>
 
 <% if (error != null) { %>
-<div class="error-message" style="margin: 15px;">
+<div class="error-message" style="margin: 15px; color: red;">
     <%= error %>
 </div>
 <% } %>
@@ -55,6 +54,8 @@
 
             <% if (!loggedInUsername.equals(profileUsername)) { %>
             <div style="margin-top: 10px;">
+
+                <%-- Existing friend request / remove friend UI --%>
                 <% if (isFriend != null && isFriend) { %>
                 <span>Friends</span>
                 <form action="removeFriend" method="post" style="display:inline;">
@@ -84,10 +85,28 @@
                 </form>
                 <% } %>
 
+                <%-- Send Message Button --%>
                 <form action="sendMessage.jsp" method="get" style="display:inline;">
                     <input type="hidden" name="toUser" value="<%= profileUsername %>">
                     <button type="submit">Send Message</button>
                 </form>
+
+                <%-- New Challenge Form: show only if isFriend --%>
+                <% if (isFriend != null && isFriend) { %>
+                <div style="margin-top: 15px; border-top: 1px solid #ccc; padding-top: 15px;">
+                    <h3>Challenge <%= profileUsername %></h3>
+                    <form action="SendChallengeServlet" method="post">
+                        <input type="hidden" name="challengedUser" value="<%= profileUsername %>" />
+                        <label for="quizName">Quiz Name:</label><br/>
+                        <input type="text" id="quizName" name="quizName" placeholder="Enter quiz name" required style="width: 100%; padding: 6px; margin-bottom: 10px;"/><br/>
+
+                        <label for="challengeMessage">Message (optional):</label><br/>
+                        <textarea id="challengeMessage" name="challengeMessage" rows="3" style="width: 100%; padding: 6px;"></textarea><br/>
+
+                        <button type="submit" style="margin-top: 8px;">Send Challenge</button>
+                    </form>
+                </div>
+                <% } %>
             </div>
             <% } %>
         </div>
