@@ -182,6 +182,15 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
             session.setAttribute("quizId", quizId);
             session.removeAttribute("multiPageQuestions_" + quizId);
             session.removeAttribute("multiPageAnswers_" + quizId);
+            String username = (String) request.getSession().getAttribute("username");
+            if (username != null) {
+                QuizTakesHistory take = new QuizTakesHistory(0, username, quizId, score, totalPoints, null, null);
+                try {
+                    new QuizTakesHistoryDAO().addQuizTake(take);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
             response.sendRedirect("quizResults.jsp?quizId=" + quizId);
         } else {
             response.sendRedirect("TakeQuizMultiPageServlet?quizId=" + quizId + "&q=" + nextQuestionIndex);
