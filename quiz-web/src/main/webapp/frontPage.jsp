@@ -23,7 +23,6 @@
     <title>Welcome</title>
     <link rel="stylesheet" href="css/smth.css">
     <link rel="icon" href="images/BRAINBUZZ.png">
-
 </head>
 <body>
 
@@ -58,7 +57,7 @@
             <div>No popular quizzes yet.</div>
             <% } else {
                 for (Quiz q : popularQuizzes) { %>
-            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="QuizSummaryServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <% } } %>
         </div>
 
@@ -68,7 +67,7 @@
             <div>No recently created quizzes yet.</div>
             <% } else {
                 for (Quiz q : recentQuizzes) { %>
-            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="QuizSummaryServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <% } } %>
         </div>
     </div>
@@ -84,7 +83,7 @@
                     String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
             %>
             <div>
-                You took <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on <%= dateFormat.format(quizTake.getTimeTaken()) %>
+                You took <a href="QuizSummaryServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
             <% } } %>
         </div>
@@ -95,7 +94,7 @@
             <div>No created quizzes by you yet.</div>
             <% } else {
                 for (Quiz q : createdQuizzes) { %>
-            <div><a href="TakeQuizServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
+            <div><a href="QuizSummaryServlet?quizId=<%= q.getId() %>"><%= q.getName() %></a></div>
             <% } } %>
         </div>
 
@@ -110,7 +109,7 @@
             %>
             <div>
                 <a href="user.jsp?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
-                <a href="TakeQuizServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on
+                <a href="QuizSummaryServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on
                 <%= dateFormat.format(quizTake.getTimeTaken()) %>
             </div>
             <% } } %>
