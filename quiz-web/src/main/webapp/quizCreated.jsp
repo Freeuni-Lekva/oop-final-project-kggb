@@ -13,7 +13,7 @@
   <h1>Success!</h1>
   <p>Your quiz has been successfully created and all questions have been added.</p>
 
-  <form action="frontPage.jsp" method="get">
+  <form action="frontPage" method="get">
     <button type="submit">Go Back to Homepage</button>
   </form>
 </div>
