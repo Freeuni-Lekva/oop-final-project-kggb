@@ -27,7 +27,6 @@ public class FrontPageServlet extends HttpServlet {
         }
 
         try {
-            // Existing attributes
             List<Announcement> announcements = AnnouncementDAO.getAnnouncements();
             List<Quiz> popularQuizzes = QuizDAO.getPopularQuizzes(10);
             List<Quiz> recentQuizzes = QuizDAO.getQuizzes(10);
@@ -36,20 +35,30 @@ public class FrontPageServlet extends HttpServlet {
             List<UserAchievement> achievements = UserAchievementDAO.getUserAchievements(username);
             List<Message> messages = MessageDAO.messagesSentToUser(username);
             List<QuizTakesHistory> friendsHistory = QuizTakesHistoryDAO.getRecentTakesByFriends(username);
-
-            // New: Challenges
             List<Challenge> challenges = ChallengeDAO.getAllChallenges(); // Or create a filter method for this user
             Map<Long, String> quizIdToName = new HashMap<>();
-
-            for (Challenge c : challenges) {
-                long quizId = c.getQuizID();
+            for (QuizTakesHistory h : quizTakesHistory) {
+                long quizId = h.getQuizId();
                 if (!quizIdToName.containsKey(quizId)) {
                     Quiz quiz = QuizDAO.getQuiz(quizId);
-                    quizIdToName.put(quizId, (quiz != null) ? quiz.getName() : "Quiz " + quizId);
+                    if (quiz != null) {
+                        quizIdToName.put(quizId, quiz.getName());
+                    }
                 }
             }
-
-            // Set attributes
+            for (Quiz q : createdQuizzes) {
+                long quizId = q.getId();
+                quizIdToName.putIfAbsent(quizId, q.getName());
+            }
+            for (QuizTakesHistory h : friendsHistory) {
+                long quizId = h.getQuizId();
+                if (!quizIdToName.containsKey(quizId)) {
+                    Quiz quiz = QuizDAO.getQuiz(quizId);
+                    if (quiz != null) {
+                        quizIdToName.put(quizId, quiz.getName());
+                    }
+                }
+            }
             request.setAttribute("announcements", announcements);
             request.setAttribute("popularQuizzes", popularQuizzes);
             request.setAttribute("recentQuizzes", recentQuizzes);

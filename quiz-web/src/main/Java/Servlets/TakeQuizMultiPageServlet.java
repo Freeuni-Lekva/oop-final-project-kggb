@@ -169,7 +169,6 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
                     }
                 }
             }
-
             String quizName = "Quiz";
             try {
                 Quiz quiz = QuizDAO.getQuiz(quizId);
@@ -177,17 +176,13 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
                     quizName = quiz.getName();
                 }
             } catch (SQLException ignored) {}
-
             session.setAttribute("score", score);
             session.setAttribute("totalPoints", totalPoints);
             session.setAttribute("quizName", quizName);
             session.setAttribute("quizId", quizId);
-
             session.removeAttribute("multiPageQuestions_" + quizId);
             session.removeAttribute("multiPageAnswers_" + quizId);
-
-            response.sendRedirect("quizResults.jsp?quizId=" + quizId);
-
+            response.sendRedirect("QuizSummaryServlet?quizId=" + quizId);
         } else {
             response.sendRedirect("TakeQuizMultiPageServlet?quizId=" + quizId + "&q=" + nextQuestionIndex);
         }
