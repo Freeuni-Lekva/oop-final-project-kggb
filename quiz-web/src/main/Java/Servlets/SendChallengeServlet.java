@@ -45,8 +45,8 @@ public class SendChallengeServlet extends HttpServlet {
 
             Quiz quiz = QuizDAO.getQuizByName(quizName);
             if (quiz == null) {
-                request.setAttribute("error", "Quiz with name '" + quizName + "' not found.");
-                request.getRequestDispatcher("profile?username=" + challenged).forward(request, response);
+                String errorMsg = java.net.URLEncoder.encode("Challenge with this name does not exist", "UTF-8");
+                response.sendRedirect("profile?username=" + challenged + "&error=" + errorMsg);
                 return;
             }
 

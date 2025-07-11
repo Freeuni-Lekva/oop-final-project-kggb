@@ -116,6 +116,7 @@ img {
     text-align: left;
 }
 
+
 .message-item {
     margin-bottom: 10px;
     padding-bottom: 8px;
@@ -194,6 +195,8 @@ img {
     text-align: center;
     padding: 6px;
 }
+
+
 
 .hidden {
  display: none;

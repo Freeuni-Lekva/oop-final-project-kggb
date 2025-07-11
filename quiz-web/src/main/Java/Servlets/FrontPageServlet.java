@@ -35,7 +35,9 @@ public class FrontPageServlet extends HttpServlet {
             List<UserAchievement> achievements = UserAchievementDAO.getUserAchievements(username);
             List<Message> messages = MessageDAO.messagesSentToUser(username);
             List<QuizTakesHistory> friendsHistory = QuizTakesHistoryDAO.getRecentTakesByFriends(username);
-            List<Challenge> challenges = ChallengeDAO.getAllChallenges(); // Or create a filter method for this user
+
+            List<Challenge> challenges = ChallengeDAO.getChallengesSentToUser(username);
+
             Map<Long, String> quizIdToName = new HashMap<>();
             for (QuizTakesHistory h : quizTakesHistory) {
                 long quizId = h.getQuizId();
@@ -59,6 +61,7 @@ public class FrontPageServlet extends HttpServlet {
                     }
                 }
             }
+
             request.setAttribute("announcements", announcements);
             request.setAttribute("popularQuizzes", popularQuizzes);
             request.setAttribute("recentQuizzes", recentQuizzes);
