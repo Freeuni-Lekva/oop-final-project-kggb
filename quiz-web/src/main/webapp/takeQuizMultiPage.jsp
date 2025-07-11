@@ -8,7 +8,7 @@
 
 <%
     Object question = request.getAttribute("question");
-    Question question1 = (Question)question;
+    Question question1 = (Question)question; 
     int questionIndex = (Integer) request.getAttribute("questionIndex");
     int totalQuestions = (Integer) request.getAttribute("totalQuestions");
     Quiz quiz = (Quiz) request.getAttribute("quiz");
