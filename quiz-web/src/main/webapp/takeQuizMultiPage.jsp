@@ -4,6 +4,9 @@
 <%@ page import="Models.TrueFalseQuestion" %>
 <%@ page import="Models.FillInTheBlankQuestion" %>
 <%@ page import="Models.PictureResponseQuestion" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.List" %>
+
 <jsp:include page="header.jsp" />
 
 
@@ -35,7 +38,9 @@
         %>
         <p><%= q.getQuestion() %></p>
         <%
-            for (String choice : q.getChoices()) {
+            List<String> choices = q.getChoices();
+            Collections.shuffle(choices);
+            for (String choice : choices) {
         %>
         <label>
             <input type="radio" name="answer" value="<%= choice %>" required />

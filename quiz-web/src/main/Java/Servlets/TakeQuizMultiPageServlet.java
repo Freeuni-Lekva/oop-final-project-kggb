@@ -182,7 +182,7 @@ public class TakeQuizMultiPageServlet extends HttpServlet {
             session.setAttribute("quizId", quizId);
             session.removeAttribute("multiPageQuestions_" + quizId);
             session.removeAttribute("multiPageAnswers_" + quizId);
-            response.sendRedirect("QuizSummaryServlet?quizId=" + quizId);
+            response.sendRedirect("quizResults.jsp?quizId=" + quizId);
         } else {
             response.sendRedirect("TakeQuizMultiPageServlet?quizId=" + quizId + "&q=" + nextQuestionIndex);
         }
