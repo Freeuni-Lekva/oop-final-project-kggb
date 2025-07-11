@@ -122,4 +122,164 @@ public class QuizTakesHistoryDAO {
         return friendTakes;
     }
 
+    public static List<QuizTakesHistory> getUserAttemptsOnQuiz(String username, long quizId) throws SQLException {
+        String sql = "SELECT * FROM quiz_takes_history WHERE username = ? AND quiz_id = ? ORDER BY time_taken DESC";
+        List<QuizTakesHistory> list = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            stmt.setLong(2, quizId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new QuizTakesHistory(
+                            rs.getLong("id"),
+                            rs.getString("username"),
+                            rs.getLong("quiz_id"),
+                            rs.getLong("score"),
+                            rs.getLong("max_score"),
+                            rs.getTimestamp("time_taken"),
+                            rs.getTime("time_spent")
+                    ));
+                }
+            }
+        }
+
+        return list;
+    }
+    public static List<QuizTakesHistory> getTopPerformersAllTime(long quizId) throws SQLException {
+        String sql = "SELECT * FROM quiz_takes_history WHERE quiz_id = ? ORDER BY (score * 1.0 / max_score) DESC LIMIT 5";
+        List<QuizTakesHistory> list = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new QuizTakesHistory(
+                            rs.getLong("id"),
+                            rs.getString("username"),
+                            rs.getLong("quiz_id"),
+                            rs.getLong("score"),
+                            rs.getLong("max_score"),
+                            rs.getTimestamp("time_taken"),
+                            rs.getTime("time_spent")
+                    ));
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static List<QuizTakesHistory> getTopPerformersToday(long quizId) throws SQLException {
+        String sql = "SELECT * FROM quiz_takes_history WHERE quiz_id = ? AND time_taken >= NOW() - INTERVAL 1 DAY ORDER BY (score * 1.0 / max_score) DESC LIMIT 5";
+        List<QuizTakesHistory> list = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new QuizTakesHistory(
+                            rs.getLong("id"),
+                            rs.getString("username"),
+                            rs.getLong("quiz_id"),
+                            rs.getLong("score"),
+                            rs.getLong("max_score"),
+                            rs.getTimestamp("time_taken"),
+                            rs.getTime("time_spent")
+                    ));
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static List<QuizTakesHistory> getRecentAttempts(long quizId) throws SQLException {
+        String sql = "SELECT * FROM quiz_takes_history WHERE quiz_id = ? ORDER BY time_taken DESC LIMIT 10";
+        List<QuizTakesHistory> list = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new QuizTakesHistory(
+                            rs.getLong("id"),
+                            rs.getString("username"),
+                            rs.getLong("quiz_id"),
+                            rs.getLong("score"),
+                            rs.getLong("max_score"),
+                            rs.getTimestamp("time_taken"),
+                            rs.getTime("time_spent")
+                    ));
+                }
+            }
+        }
+
+        return list;
+    }
+
+    public static double getAverageScore(long quizId) throws SQLException {
+        String sql = "SELECT AVG(score * 1.0 / max_score) AS avg_score FROM quiz_takes_history WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getDouble("avg_score") * 100;
+            }
+        }
+        return 0.0;
+    }
+
+    public static double getMaxScore(long quizId) throws SQLException {
+        String sql = "SELECT MAX(score * 1.0 / max_score) AS max_score FROM quiz_takes_history WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getDouble("max_score") * 100;
+            }
+        }
+        return 0.0;
+    }
+
+    public static double getMinScore(long quizId) throws SQLException {
+        String sql = "SELECT MIN(score * 1.0 / max_score) AS min_score FROM quiz_takes_history WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getDouble("min_score") * 100;
+            }
+        }
+        return 0.0;
+    }
+
+    public static int getTotalAttempts(long quizId) throws SQLException {
+        String sql = "SELECT COUNT(*) AS total FROM quiz_takes_history WHERE quiz_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, quizId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getInt("total");
+            }
+        }
+        return 0;
+    }
+
 }
