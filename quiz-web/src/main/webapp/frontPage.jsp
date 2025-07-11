@@ -1,17 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page import="java.util.List,java.util.Map" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="Models.*" %>
-<%@ page import="DAOs.QuizDAO" %>
 
 <%
     List<Message> messages = (List<Message>) request.getAttribute("messages");
+    List<Challenge> challenges = (List<Challenge>) request.getAttribute("challenges");
     List<Quiz> popularQuizzes = (List<Quiz>) request.getAttribute("popularQuizzes");
     List<Quiz> recentQuizzes = (List<Quiz>) request.getAttribute("recentQuizzes");
     List<QuizTakesHistory> quizTakesHistory = (List<QuizTakesHistory>) request.getAttribute("quizTakesHistory");
     List<Quiz> createdQuizzes = (List<Quiz>) request.getAttribute("createdQuizzes");
     List<QuizTakesHistory> friendsHistory = (List<QuizTakesHistory>) request.getAttribute("friendsHistory");
     List<Achievement> achievements = (List<Achievement>) request.getAttribute("achievements");
+    Map<Long, String> quizIdToName = (Map<Long, String>) request.getAttribute("quizIdToName");
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 %>
@@ -31,6 +32,29 @@
         <button type="submit" class="action-button create-quiz-btn">➕ Create a Quiz</button>
     </form>
 
+    <!-- Challenges -->
+    <div class="challenges-dropdown-container">
+        <button id="challenges-btn" class="action-button challenge-btn">🎯 Challenges</button>
+        <div id="challenges-dropdown" class="challenges-dropdown hidden">
+            <% if (challenges == null || challenges.isEmpty()) { %>
+            <div class="challenge-item">No challenges yet.</div>
+            <% } else {
+                for (Challenge c : challenges) {
+                    String quizName = quizIdToName.get(c.getQuizID());
+                    if (quizName == null) {
+                        quizName = "Quiz " + c.getQuizID();
+                    }
+            %>
+            <div class="challenge-item">
+                From: <a href="profile?username=<%= c.getChallenger() %>"><%= c.getChallenger() %></a><br/>
+                Quiz: <a href="QuizSummaryServlet?quizId=<%= c.getQuizID() %>"><%= quizName %></a><br/>
+                Message: <%= c.getChallengeMessage() %>
+            </div>
+            <% } } %>
+        </div>
+    </div>
+
+    <!-- Messages -->
     <div class="messages-dropdown-container">
         <button id="messages-btn" class="action-button message-btn">📩 Messages</button>
         <div id="messages-dropdown" class="messages-dropdown hidden">
@@ -79,8 +103,10 @@
             <div>No recent quiz activity yet.</div>
             <% } else {
                 for (QuizTakesHistory quizTake : quizTakesHistory) {
-                    Quiz q = QuizDAO.getQuiz(quizTake.getQuizId());
-                    String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
+                    String title = quizIdToName.get(quizTake.getQuizId());
+                    if (title == null) {
+                        title = "Quiz " + quizTake.getQuizId();
+                    }
             %>
             <div>
                 You took <a href="QuizSummaryServlet?quizId=<%= quizTake.getQuizId() %>"><%= title %></a> on <%= dateFormat.format(quizTake.getTimeTaken()) %>
@@ -104,8 +130,10 @@
             <div>No quiz activity from friends yet.</div>
             <% } else {
                 for (QuizTakesHistory quizTake : friendsHistory) {
-                    Quiz q = QuizDAO.getQuiz(quizTake.getQuizId());
-                    String title = (q != null) ? q.getName() : "Quiz " + quizTake.getQuizId();
+                    String title = quizIdToName.get(quizTake.getQuizId());
+                    if (title == null) {
+                        title = "Quiz " + quizTake.getQuizId();
+                    }
             %>
             <div>
                 <a href="profile?username=<%= quizTake.getUsername() %>"><%= quizTake.getUsername() %></a> took
@@ -126,20 +154,29 @@
         <% } } %>
         <a href="achievements.jsp">View all →</a>
     </div>
-
 </div>
 
 <script>
     const msgBtn = document.getElementById('messages-btn');
-    const dropdown = document.getElementById('messages-dropdown');
+    const msgDropdown = document.getElementById('messages-dropdown');
+
+    const chBtn = document.getElementById('challenges-btn');
+    const chDropdown = document.getElementById('challenges-dropdown');
 
     msgBtn.addEventListener('click', () => {
-        dropdown.classList.toggle('hidden');
+        msgDropdown.classList.toggle('hidden');
+    });
+
+    chBtn.addEventListener('click', () => {
+        chDropdown.classList.toggle('hidden');
     });
 
     document.addEventListener('click', (e) => {
-        if (!msgBtn.contains(e.target) && !dropdown.contains(e.target)) {
-            dropdown.classList.add('hidden');
+        if (!msgBtn.contains(e.target) && !msgDropdown.contains(e.target)) {
+            msgDropdown.classList.add('hidden');
+        }
+        if (!chBtn.contains(e.target) && !chDropdown.contains(e.target)) {
+            chDropdown.classList.add('hidden');
         }
     });
 </script>

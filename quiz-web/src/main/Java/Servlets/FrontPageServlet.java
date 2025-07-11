@@ -6,24 +6,28 @@ import Models.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/frontPage")
 public class FrontPageServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         HttpSession session = request.getSession(false);
         String username = (String) session.getAttribute("username");
-        if(username == null) {
+
+        if (username == null) {
             response.sendRedirect("login.jsp");
             return;
         }
-        try{
+
+        try {
+            // Existing attributes
             List<Announcement> announcements = AnnouncementDAO.getAnnouncements();
             List<Quiz> popularQuizzes = QuizDAO.getPopularQuizzes(10);
             List<Quiz> recentQuizzes = QuizDAO.getQuizzes(10);
@@ -33,6 +37,19 @@ public class FrontPageServlet extends HttpServlet {
             List<Message> messages = MessageDAO.messagesSentToUser(username);
             List<QuizTakesHistory> friendsHistory = QuizTakesHistoryDAO.getRecentTakesByFriends(username);
 
+            // New: Challenges
+            List<Challenge> challenges = ChallengeDAO.getAllChallenges(); // Or create a filter method for this user
+            Map<Long, String> quizIdToName = new HashMap<>();
+
+            for (Challenge c : challenges) {
+                long quizId = c.getQuizID();
+                if (!quizIdToName.containsKey(quizId)) {
+                    Quiz quiz = QuizDAO.getQuiz(quizId);
+                    quizIdToName.put(quizId, (quiz != null) ? quiz.getName() : "Quiz " + quizId);
+                }
+            }
+
+            // Set attributes
             request.setAttribute("announcements", announcements);
             request.setAttribute("popularQuizzes", popularQuizzes);
             request.setAttribute("recentQuizzes", recentQuizzes);
@@ -41,6 +58,9 @@ public class FrontPageServlet extends HttpServlet {
             request.setAttribute("achievements", achievements);
             request.setAttribute("messages", messages);
             request.setAttribute("friendsHistory", friendsHistory);
+
+            request.setAttribute("challenges", challenges);
+            request.setAttribute("quizIdToName", quizIdToName);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("frontPage.jsp");
             dispatcher.forward(request, response);
