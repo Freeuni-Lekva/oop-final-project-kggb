@@ -37,13 +37,28 @@ public class FrontPageServlet extends HttpServlet {
             List<QuizTakesHistory> friendsHistory = QuizTakesHistoryDAO.getRecentTakesByFriends(username);
 
             List<Challenge> challenges = ChallengeDAO.getChallengesSentToUser(username);
-            Map<Long, String> quizIdToName = new HashMap<>();
 
-            for (Challenge c : challenges) {
-                long quizId = c.getQuizID();
+            Map<Long, String> quizIdToName = new HashMap<>();
+            for (QuizTakesHistory h : quizTakesHistory) {
+                long quizId = h.getQuizId();
                 if (!quizIdToName.containsKey(quizId)) {
                     Quiz quiz = QuizDAO.getQuiz(quizId);
-                    quizIdToName.put(quizId, (quiz != null) ? quiz.getName() : "Quiz " + quizId);
+                    if (quiz != null) {
+                        quizIdToName.put(quizId, quiz.getName());
+                    }
+                }
+            }
+            for (Quiz q : createdQuizzes) {
+                long quizId = q.getId();
+                quizIdToName.putIfAbsent(quizId, q.getName());
+            }
+            for (QuizTakesHistory h : friendsHistory) {
+                long quizId = h.getQuizId();
+                if (!quizIdToName.containsKey(quizId)) {
+                    Quiz quiz = QuizDAO.getQuiz(quizId);
+                    if (quiz != null) {
+                        quizIdToName.put(quizId, quiz.getName());
+                    }
                 }
             }
 
